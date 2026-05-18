@@ -50,7 +50,31 @@ export const Background = styled.div`
 `;
 
 export const Overlay = styled.div`
-  display: none;
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1100px;
+  height: calc(100% - 260px);
+  border-radius: 24px;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.62) 0%,
+    rgba(0, 0, 0, 0.45) 40%,
+    rgba(0, 0, 0, 0.68) 100%
+  );
+  z-index: 2;
+
+  ${({ theme }) => theme.media.tablet} {
+    top: 60px;
+    height: calc(100% - 160px);
+    left: ${({ theme }) => theme.layout.contentPaddingMobile};
+    right: ${({ theme }) => theme.layout.contentPaddingMobile};
+    transform: none;
+    width: auto;
+    border-radius: 16px;
+  }
 `;
 
 export const Container = styled.div`
@@ -163,9 +187,32 @@ export const ImagePlaceholder = styled.div`
 `;
 
 export const TimelineContent = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 18px;
+  padding: 8px 4px;
+
+  /* Editorial accent marker — replaces the box */
+  &::before {
+    content: '';
+    display: block;
+    width: 56px;
+    height: 2px;
+    background: ${({ theme }) => theme.colors.white};
+    opacity: 0.92;
+    margin-bottom: 6px;
+  }
+
+  ${({ theme }) => theme.media.tablet} {
+    gap: 14px;
+    padding: 4px 0;
+
+    &::before {
+      width: 40px;
+      align-self: flex-start !important;
+    }
+  }
 `;
 
 export const TimelineItem = styled.div`
@@ -189,6 +236,10 @@ export const TimelineItem = styled.div`
       ${TimelineContent} {
         order: 2;
         text-align: left;
+
+        &::before {
+          align-self: flex-start;
+        }
       }
     `}
 
@@ -201,6 +252,10 @@ export const TimelineItem = styled.div`
       ${TimelineContent} {
         order: 1;
         text-align: right;
+
+        &::before {
+          align-self: flex-end;
+        }
       }
     `}
 
@@ -219,14 +274,30 @@ export const TimelineItem = styled.div`
 
 export const Year = styled.p`
   font-family: ${({ theme }) => theme.fonts.en};
-  font-size: ${({ theme }) => theme.fontSize.h2};
+  font-size: 96px;
   font-weight: ${({ theme }) => theme.fontWeight.extrabold};
-  color: ${({ theme }) => theme.colors.white};
-  letter-spacing: ${({ theme }) => theme.letterSpacing.tight};
-  line-height: 1;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    rgba(255, 255, 255, 0.6) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.45));
+
+  ${({ theme }) => theme.media.desktop} {
+    font-size: 76px;
+  }
 
   ${({ theme }) => theme.media.tablet} {
-    font-size: ${({ theme }) => theme.fontSize.h3};
+    font-size: 60px;
+  }
+
+  ${({ theme }) => theme.media.mobile} {
+    font-size: 46px;
   }
 `;
 
@@ -235,6 +306,9 @@ export const CardTitle = styled.h3`
   font-size: ${({ theme }) => theme.fontSize.h4};
   font-weight: ${({ theme }) => theme.fontWeight.semibold};
   color: ${({ theme }) => theme.colors.white};
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.55);
 
   ${({ theme }) => theme.media.tablet} {
     font-size: ${({ theme }) => theme.fontSize.bodyLg};
@@ -245,7 +319,8 @@ export const CardDesc = styled.p`
   font-family: ${({ theme }) => theme.fonts.ko};
   font-size: ${({ theme }) => theme.fontSize.body};
   line-height: ${({ theme }) => theme.lineHeight.relaxed};
-  color: ${({ theme }) => theme.colors.textOnDarkMuted};
+  color: rgba(255, 255, 255, 0.94);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.6);
 
   ${({ theme }) => theme.media.tablet} {
     font-size: ${({ theme }) => theme.fontSize.bodySm};

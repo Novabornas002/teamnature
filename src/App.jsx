@@ -8,6 +8,7 @@ import ProductDetailPage from './pages/ProductDetailPage';
 
 import NewsroomSub from './pages/NewsroomSub';
 import TechSub from './pages/TechSub';
+import HistoryPage from './pages/HistoryPage';
 import ScrollToTop from './components/common/ScrollToTop';
 
 function App() {
@@ -16,6 +17,9 @@ function App() {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
+        
+        {/* 노스페이스 연대기 페이지 */}
+        <Route path="/history" element={<HistoryPage />} />
 
         {/* 상품 페이지 */}
         <Route path="/products" element={<Products />} />

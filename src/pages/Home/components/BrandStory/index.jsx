@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import HistoryModal from '../HistoryModal'; 
+import { useNavigate } from 'react-router-dom';
 import brandBg from '../../../../assets/images/brand-bg.jpg';
 import brand1966 from '../../../../assets/images/brand-1966.png';
 import brand1997 from '../../../../assets/images/brand-1997.png';
@@ -42,7 +42,7 @@ const TIMELINE_DATA = [
     id: 2,
     year: '1997',
     title: '한국 시장 진출',
-    desc: '블랙야크와의 파트너십을 통해\n한국 아웃도어 시장에 본격적으로 진입했다.',
+    desc: '영원아웃도어를 통해 국내에 본격적으로 소개되며\n한국 아웃도어 시장에 본격적으로 진입했다.',
     align: 'left',
     image: brand1997,
     placeholderText: '1997 KOREA',
@@ -61,18 +61,13 @@ const fadeUp = {
 function BrandStory() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
+  const navigate = useNavigate();
 
-   // 모달 상태 추가
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedHistoryId, setSelectedHistoryId] = useState(1);
-
-  const handleOpenModal = () => {
-    setSelectedHistoryId(1);
-    setModalOpen(true);
+  const handleOpenHistory = () => {
+    navigate('/history');
   };
 
   return (
-    <>
     <StoryWrapper ref={sectionRef}>
       <Background style={{ backgroundImage: `url(${brandBg})` }} />
       <Overlay />
@@ -110,12 +105,12 @@ function BrandStory() {
             >
               <TimelineImage>
                 {item.image ? (
-                <img src={item.image} alt={item.placeholderText} />
+                  <img src={item.image} alt={item.placeholderText} />
                 ) : (
-                <ImagePlaceholder>
-                <span>{item.placeholderText}</span>
-                </ImagePlaceholder>
-              )}
+                  <ImagePlaceholder>
+                    <span>{item.placeholderText}</span>
+                  </ImagePlaceholder>
+                )}
               </TimelineImage>
 
               <TimelineContent>
@@ -144,7 +139,7 @@ function BrandStory() {
               58년의 탐험,<br />
               아직 끝나지 않았다
             </Closing>
-            <CTAButton as="button" onClick={handleOpenModal}>
+            <CTAButton as="button" onClick={handleOpenHistory}>
               <span>연대기 상세보기</span>
               <Arrow>→</Arrow>
             </CTAButton>
@@ -152,14 +147,6 @@ function BrandStory() {
         </Footer>
       </Container>
     </StoryWrapper>
-
-    <HistoryModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        selectedId={selectedHistoryId}
-        onSelect={setSelectedHistoryId}
-      />
-    </>
   );
 }
 

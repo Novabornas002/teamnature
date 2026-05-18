@@ -1,132 +1,160 @@
-import styled from 'styled-components';
+import styled, { keyframes, css } from "styled-components";
 
-export const EsgWrapper = styled.section`
-  position: relative;
-  width: 100%;
-  background: ${({ theme }) => theme.colors.white};
-  padding: 140px 0 160px;
-  overflow: hidden;
-
-  ${({ theme }) => theme.media.tablet} {
-    padding: 80px 0 100px;
+// ─────────────────────────────────────────────────────────────
+// Keyframes — 슬라이드 전환 애니메이션
+// ─────────────────────────────────────────────────────────────
+const slideInRight = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(40px);
   }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`;
+
+const slideInLeft = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`;
+
+// ─────────────────────────────────────────────────────────────
+// 섹션 전체 래퍼
+// ─────────────────────────────────────────────────────────────
+export const Section = styled.section`
+  background: linear-gradient(180deg, #f5f5f5 0%, #e8e8e8 100%);
+  padding: 100px 0 120px;
+  font-family: -apple-system, "Pretendard", "Apple SD Gothic Neo", sans-serif;
+  color: #1a1a1a;
+  overflow: hidden;
 `;
 
 export const Container = styled.div`
-  max-width: ${({ theme }) => theme.layout.maxWidth};
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 ${({ theme }) => theme.layout.contentPadding};
+  padding: 0 80px;
 
-  ${({ theme }) => theme.media.tablet} {
-    padding: 0 ${({ theme }) => theme.layout.contentPaddingMobile};
+  @media (max-width: 1024px) {
+    padding: 0 40px;
+  }
+  @media (max-width: 768px) {
+    padding: 0 24px;
   }
 `;
 
-export const Header = styled.div`
+// ─────────────────────────────────────────────────────────────
+// 헤더 (타이틀 + 서브타이틀)
+// ─────────────────────────────────────────────────────────────
+export const Header = styled.header`
   margin-bottom: 80px;
-  max-width: 900px;
-
-  ${({ theme }) => theme.media.tablet} {
-    margin-bottom: 48px;
-  }
 `;
 
-export const MainTitle = styled.h2`
-  font-family: ${({ theme }) => theme.fonts.en};
-  font-size: 64px;
-  font-weight: ${({ theme }) => theme.fontWeight.extrabold};
-  line-height: 1.05;
+export const Title = styled.h1`
+  font-family: "Helvetica Neue", "Arial Black", sans-serif;
+  font-size: clamp(40px, 5vw, 72px);
+  font-weight: 900;
+  line-height: 0.95;
   letter-spacing: -0.02em;
-  color: ${({ theme }) => theme.colors.textPrimary};
-  margin-bottom: 32px;
-
-  ${({ theme }) => theme.media.desktop} {
-    font-size: 52px;
-  }
-
-  ${({ theme }) => theme.media.tablet} {
-    font-size: 36px;
-    margin-bottom: 24px;
-  }
-
-  ${({ theme }) => theme.media.mobile} {
-    font-size: 28px;
-  }
+  margin: 0 0 32px;
+  color: #0a0a0a;
 `;
 
-export const Description = styled.p`
-  font-family: ${({ theme }) => theme.fonts.ko};
-  font-size: ${({ theme }) => theme.fontSize.body};
-  line-height: ${({ theme }) => theme.lineHeight.relaxed};
-  color: ${({ theme }) => theme.colors.textSecondary};
-
-  ${({ theme }) => theme.media.tablet} {
-    font-size: ${({ theme }) => theme.fontSize.bodySm};
-  }
+export const Subtitle = styled.p`
+  font-size: 14px;
+  line-height: 1.9;
+  color: #555;
+  margin: 0;
+  max-width: 720px;
+  font-weight: 400;
 `;
 
-/* ===== 슬라이더 ===== */
-
-export const CardSlider = styled.div`
+// ─────────────────────────────────────────────────────────────
+// 캐러셀 영역 (화살표 + 그리드)
+// ─────────────────────────────────────────────────────────────
+export const CarouselWrap = styled.div`
   position: relative;
-  width: 100%;
-  margin: 0 auto;
-  padding: 20px 0;
-  /* overflow 제거 - 화살표가 보이도록 */
+  display: flex;
+  align-items: center;
+  gap: 24px;
 `;
 
-export const SliderTrack = styled.div`
+export const ArrowButton = styled.button`
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid #999;
+  background: transparent;
+  color: #1a1a1a;
+  cursor: pointer;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  padding: 0;
+
+  &:hover {
+    background: #1a1a1a;
+    color: #fff;
+    border-color: #1a1a1a;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+`;
+
+export const Grid = styled.div`
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  justify-content: center;  /* 시작부터 가운데 정렬 */
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 0;
 
-  /* currentIndex에 따라 좌우로 한 칸씩 이동 */
-  transform: translateX(
-    calc((var(--current-index, 2) - 2) * (var(--card-width) + 24px) * -1)
-  );
-
-  --card-width: 320px;
-
-  & > * {
-    flex: 0 0 var(--card-width);
-  }
-
-  ${({ theme }) => theme.media.desktop} {
-    --card-width: 280px;
-  }
-
-  ${({ theme }) => theme.media.tablet} {
-    --card-width: 240px;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
     gap: 16px;
   }
 `;
 
+// ─────────────────────────────────────────────────────────────
+// 카드 — direction prop으로 슬라이드 방향 제어
+// cardIndex로 stagger(시차) 적용
+// ─────────────────────────────────────────────────────────────
 export const Card = styled.div`
   position: relative;
   aspect-ratio: 3 / 4;
   border-radius: 16px;
   overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
   cursor: pointer;
-  transition: transform ${({ theme }) => theme.transition.base};
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  background: #333;
+
+  animation: ${(props) => (props.$direction === 1 ? slideInRight : slideInLeft)}
+    0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: ${(props) => props.$cardIndex * 0.08}s;
 
   &:hover {
     transform: translateY(-4px);
-  }
-
-  ${({ theme }) => theme.media.tablet} {
-    aspect-ratio: 4 / 3;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
   }
 `;
 
-export const CardImage = styled.div`
+export const CardImage = styled.img`
   position: absolute;
   inset: 0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-color: #444444;
-  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   transition: transform 0.6s ease;
 
   ${Card}:hover & {
@@ -134,118 +162,107 @@ export const CardImage = styled.div`
   }
 `;
 
+// overlay prop: "dark" | "light" | "none"
 export const CardOverlay = styled.div`
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.55) 0%,
-    rgba(0, 0, 0, 0.25) 35%,
-    rgba(0, 0, 0, 0.4) 70%,
-    rgba(0, 0, 0, 0.75) 100%
-  );
-  z-index: 2;
+
+  ${(props) =>
+    props.$overlay === "dark" &&
+    css`
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.55) 0%,
+        rgba(0, 0, 0, 0.25) 50%,
+        rgba(0, 0, 0, 0.65) 100%
+      );
+    `}
+
+  ${(props) =>
+    props.$overlay === "light" &&
+    css`
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.25) 0%,
+        rgba(0, 0, 0, 0.1) 50%,
+        rgba(0, 0, 0, 0.45) 100%
+      );
+    `}
+
+  ${(props) =>
+    props.$overlay === "none" &&
+    css`
+      background: transparent;
+    `}
 `;
 
 export const CardContent = styled.div`
-  position: relative;
-  z-index: 3;
-  width: 100%;
-  height: 100%;
-  padding: 28px;
+  position: absolute;
+  inset: 0;
+  padding: 32px 28px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  color: ${({ theme }) => theme.colors.white};
-
-  ${({ theme }) => theme.media.tablet} {
-    padding: 20px;
-  }
+  color: #fff;
 `;
 
-export const CardLabel = styled.p`
-  font-family: ${({ theme }) => theme.fonts.ko};
-  font-size: ${({ theme }) => theme.fontSize.bodySm};
-  font-weight: ${({ theme }) => theme.fontWeight.medium};
-  color: rgba(255, 255, 255, 0.85);
+export const CardLabel = styled.div`
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   margin-bottom: 8px;
-
-  ${({ theme }) => theme.media.tablet} {
-    font-size: ${({ theme }) => theme.fontSize.caption};
-  }
+  opacity: 0.95;
 `;
 
-export const CardValue = styled.p`
-  font-family: ${({ theme }) => theme.fonts.en};
-  font-size: 36px;
-  font-weight: ${({ theme }) => theme.fontWeight.bold};
+export const CardValue = styled.div`
+  font-family: "Helvetica Neue", "Arial", sans-serif;
+  font-size: clamp(28px, 2.5vw, 40px);
+  font-weight: 400;
+  line-height: 1.1;
   letter-spacing: -0.02em;
-  line-height: 1;
-  color: ${({ theme }) => theme.colors.white};
-
-  ${({ theme }) => theme.media.desktop} {
-    font-size: 30px;
-  }
-
-  ${({ theme }) => theme.media.tablet} {
-    font-size: 28px;
-  }
+  margin-bottom: auto;
+  font-variant-numeric: tabular-nums;
 `;
 
-export const CardDesc = styled.p`
-  font-family: ${({ theme }) => theme.fonts.ko};
-  font-size: ${({ theme }) => theme.fontSize.caption};
-  line-height: ${({ theme }) => theme.lineHeight.relaxed};
-  color: rgba(255, 255, 255, 0.85);
+export const CardSuffix = styled.span`
+  font-size: 0.85em;
+  font-weight: 400;
+  margin-left: 2px;
+`;
+
+export const CardDesc = styled.div`
+  font-size: 11.5px;
+  line-height: 1.7;
   text-align: center;
-
-  ${({ theme }) => theme.media.tablet} {
-    font-size: 11px;
-    text-align: left;
-  }
+  margin-top: auto;
+  padding-bottom: 8px;
+  opacity: 0.92;
+  font-weight: 300;
 `;
 
-/* ===== 좌우 화살표 버튼 ===== */
+export const DescBreak = styled.div`
+  height: 10px;
+`;
 
-export const ArrowButton = styled.button`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  ${({ $position }) => ($position === 'left' ? 'left: -64px;' : 'right: -64px;')}
-
-  z-index: 10;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: ${({ theme }) => theme.colors.white};
-  border: 1px solid ${({ theme }) => theme.colors.gray200};
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-  font-size: 12px;
-  color: ${({ theme }) => theme.colors.textPrimary};
-  cursor: pointer;
-  transition: ${({ theme }) => theme.transition.base};
+// ─────────────────────────────────────────────────────────────
+// 인디케이터 (하단 슬라이드 표시)
+// ─────────────────────────────────────────────────────────────
+export const Indicators = styled.div`
   display: flex;
-  align-items: center;
   justify-content: center;
+  gap: 10px;
+  margin-top: 48px;
+`;
 
-  &:hover:not(:disabled) {
-    background: ${({ theme }) => theme.colors.textPrimary};
-    color: ${({ theme }) => theme.colors.white};
-    border-color: ${({ theme }) => theme.colors.textPrimary};
-  }
+export const Indicator = styled.button`
+  width: ${(props) => (props.$active ? "48px" : "32px")};
+  height: 2px;
+  background: ${(props) => (props.$active ? "#0a0a0a" : "#c0c0c0")};
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
 
-  &:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
-
-  ${({ theme }) => theme.media.desktop} {
-    ${({ $position }) => ($position === 'left' ? 'left: -48px;' : 'right: -48px;')}
-  }
-
-  ${({ theme }) => theme.media.tablet} {
-    width: 40px;
-    height: 40px;
-    ${({ $position }) => ($position === 'left' ? 'left: 0;' : 'right: 0;')}
+  &:hover {
+    background: ${(props) => (props.$active ? "#0a0a0a" : "#888")};
   }
 `;

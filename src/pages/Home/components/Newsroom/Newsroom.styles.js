@@ -1,6 +1,30 @@
 import styled from 'styled-components';
 import newsroomBg from '../../../../assets/images/newsroom-bg.png';
 
+export const Background = styled.div`
+  position: absolute;
+  inset: 0;
+  background-image: url(${newsroomBg});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+  transition: transform 0.8s ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0.18) 50%,
+      rgba(0, 0, 0, 0.4) 100%
+    );
+    transition: background 0.6s ease;
+  }
+`;
+
 export const NewsroomWrapper = styled.section`
   position: relative;
   width: 100%;
@@ -10,27 +34,18 @@ export const NewsroomWrapper = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
+  cursor: pointer;
 
-export const Background = styled.div`
-  position: absolute;
-  inset: 0;
-  background-image: url(${newsroomBg});
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: 1;
+  &:hover ${Background} {
+    transform: scale(1.04);
+  }
 
-  /* 살짝 어두운 오버레이 — 텍스트 가독성 */
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
+  &:hover ${Background}::after {
     background: linear-gradient(
       180deg,
-      rgba(0, 0, 0, 0.2) 0%,
-      rgba(0, 0, 0, 0.1) 50%,
-      rgba(0, 0, 0, 0.3) 100%
+      rgba(0, 0, 0, 0.62) 0%,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0.72) 100%
     );
   }
 `;
@@ -67,7 +82,17 @@ export const MainTitle = styled.h2`
   letter-spacing: -0.02em;
   line-height: 1;
   color: ${({ theme }) => theme.colors.white};
-  text-shadow: 0 4px 32px rgba(0, 0, 0, 0.4);
+  text-shadow:
+    0 6px 32px rgba(0, 0, 0, 0.75),
+    0 2px 10px rgba(0, 0, 0, 0.55);
+  transition: text-shadow 0.4s ease, letter-spacing 0.5s ease;
+
+  ${NewsroomWrapper}:hover & {
+    text-shadow:
+      0 10px 48px rgba(0, 0, 0, 0.9),
+      0 4px 14px rgba(0, 0, 0, 0.7);
+    letter-spacing: 0;
+  }
 
   ${({ theme }) => theme.media.desktop} {
     font-size: 96px;
@@ -96,6 +121,10 @@ export const CTAButton = styled.button`
   border-radius: 32px;
   cursor: pointer;
   transition: ${({ theme }) => theme.transition.base};
+
+  ${NewsroomWrapper}:hover & {
+    border-color: rgba(255, 255, 255, 0.9);
+  }
 
   &:hover {
     background: ${({ theme }) => theme.colors.white};

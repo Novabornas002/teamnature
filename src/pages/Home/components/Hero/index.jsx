@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 import hero1 from '../../../../assets/videos/hero-1.mp4';
 import hero2 from '../../../../assets/videos/hero-2.mp4';
@@ -16,6 +17,7 @@ import {
   ContentInner,
   SubCopy,
   MainCopy,
+  CTAButton,
   IndicatorArea,
   IndicatorList,
   IndicatorItem,
@@ -23,36 +25,43 @@ import {
   ScrollHintLine,
 } from './Hero.styles';
 
+const PRODUCTS_PATH = '/products';
+
 const SLIDES = [
    {
     id: 0,
     video: hero1,
     subCopy: 'HOME',
     mainCopy: 'NEVER STOP\nEXPLORING',
+    cta: { label: 'DISCOVER MORE', to: PRODUCTS_PATH },
   },
   {
     id: 1,
     video: hero2,
     subCopy: 'BRAND STORY',
     mainCopy: 'NEVER STOP\nEXPLORING',
+    cta: { label: 'OUR STORY', to: PRODUCTS_PATH },
   },
   {
     id: 2,
     video: hero3,
     subCopy: 'SUSTAINABILITY',
     mainCopy: 'NEVER STOP\nPROTECTING',
+    cta: { label: 'LEARN MORE', to: PRODUCTS_PATH },
   },
   {
     id: 3,
     video: hero4,
     subCopy: 'PRODUCTS',
     mainCopy: '산이 만들고,\n도시가 입는다',
+    cta: { label: 'VIEW PRODUCTS', to: PRODUCTS_PATH },
   },
   {
     id: 4,
     video: hero5,
     subCopy: 'TECHNOLOGY',
     mainCopy: '보이지 않는 기술이,\n가장 가까이에서',
+    cta: { label: 'EXPLORE TECH', to: PRODUCTS_PATH },
   },
 ];
 
@@ -134,6 +143,11 @@ function Hero() {
                   </span>
                 ))}
               </MainCopy>
+              {slide.cta && (
+                <CTAButton as={Link} to={slide.cta.to}>
+                  {slide.cta.label}
+                </CTAButton>
+              )}
             </motion.div>
           </AnimatePresence>
         </ContentInner>
