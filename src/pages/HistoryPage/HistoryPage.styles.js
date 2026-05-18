@@ -91,31 +91,39 @@ export const PageTitle = styled.div`
 
 export const BackButton = styled.button`
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 0;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
   color: #fff;
-  padding: 10px 20px;
   font-family: ${({ theme }) => theme.fonts.en};
   font-size: 13px;
   letter-spacing: 0.1em;
   cursor: pointer;
-  backdrop-filter: blur(10px);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
   transition: all 0.3s ease;
 
-  &:hover {
-    background: rgba(255, 255, 255, 0.16);
-    border-color: rgba(255, 255, 255, 0.4);
+
+  span:first-child {
+    display: inline-block;
+    transition: transform 0.3s ease;
   }
 
-  @media (max-width: 768px) {
+  &:hover span:first-child {
+    transform: translateX(-4px);
+  }
+
+    @media (max-width: 768px) {
     position: static;
     transform: none;
     margin-bottom: 20px;
   }
 `;
+
+
+
 
 export const Timeline = styled.div`
   position: relative;
@@ -129,16 +137,17 @@ export const Timeline = styled.div`
     position: absolute;
     top: 0;
     left: 50%;
-    width: 1px;
+    width: 2px;
     height: 100%;
     background: linear-gradient(
       180deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.3) 8%,
-      rgba(255, 255, 255, 0.3) 92%,
+      rgba(255, 255, 255, 0.4) 8%,
+      rgba(255, 255, 255, 0.4) 92%,
       transparent 100%
     );
-    transform: translateX(-50%);
+    transform: translateX(-1px);
+    z-index: 0;
   }
 
   @media (max-width: 768px) {
@@ -154,7 +163,7 @@ export const TimelineItem = styled(motion.div)`
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  gap: 80px;
+  gap: 180px;
   position: relative;
 
   @media (max-width: 768px) {
@@ -176,6 +185,7 @@ export const ImageBox = styled(motion.div)`
     height: 100%;
     object-fit: cover;
     transition: transform 0.6s ease;
+    border-radius: 15px
   }
 
   &:hover img {
@@ -220,7 +230,8 @@ export const Description = styled.p`
   color: rgba(255, 255, 255, 0.85);
   margin: 0;
   white-space: pre-line;
-  max-width: 340px;
+  width: 100%;
+  word-break: keep-all;
 
   @media (max-width: 768px) {
     font-size: 14px;

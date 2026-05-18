@@ -165,7 +165,10 @@ function HistoryPage() {
 
       <Container>
         <PageTitle>
-          <BackButton onClick={() => navigate('/')}>← BACK</BackButton>
+          <BackButton onClick={() => navigate('/')}>
+            <span>←</span>
+            <span>BACK</span>
+          </BackButton>
           <h1>OUR HERITAGE</h1>
           <p>1966년부터 이어진 노스페이스의 여정</p>
         </PageTitle>
