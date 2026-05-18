@@ -111,6 +111,18 @@
   transform: translateY(-6px);
 }
 
+.product-card:has(.product-badge.sold-out) .product-image-box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.28);
+  pointer-events: none;
+}
+
+.product-card:has(.product-badge.sold-out) .product-badge {
+  z-index: 4;
+}
+
 .product-image-box {
   position: relative;
   width: 100%;
@@ -244,30 +256,9 @@
     backdrop-filter 0.3s ease;
 }
 
-.product-overlay span {
-  color: #ffffff;
-
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 2px;
-
-  transform: translateY(10px);
-
-  transition:
-    transform 0.3s ease,
-    opacity 0.3s ease;
-
-  opacity: 0;
-}
-
 .product-card:hover .product-overlay {
   opacity: 1;
   backdrop-filter: blur(2px);
-}
-
-.product-card:hover .product-overlay span {
-  transform: translateY(0);
-  opacity: 1;
 }
 
 .product-sort-area {
@@ -342,4 +333,48 @@
 
 .product-card:hover p {
   transform: translateY(-2px);
+}
+
+.product-overlay {
+  gap: 28px;
+  z-index: 5;
+}
+
+.product-overlay button,
+.product-overlay a {
+  width: 48px;
+  height: 48px;
+
+  border: none;
+  background: transparent;
+  color: #ffffff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 34px;
+  cursor: pointer;
+  text-decoration: none;
+
+  transition:
+    transform 0.25s ease,
+    color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.product-overlay button:hover,
+.product-overlay a:hover {
+  transform: translateY(-4px) scale(1.08);
+  opacity: 0.85;
+}
+
+.product-text-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.hover-like-btn.liked {
+  color: #d6001c;
 }

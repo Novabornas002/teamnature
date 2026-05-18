@@ -6,15 +6,12 @@ import "./ProductHero.styles.css";
 
 import logo from "../../../../assets/images/north-logo1.png";
 
-import activityImage from "../../../../assets/images/activity.jpg";
-import footwearImage from "../../../../assets/images/footwear.jpg";
-import campingImage from "../../../../assets/images/camping2.jpg";
-import whiteLabelImage from "../../../../assets/images/whitelabel.jpg";
-
-import activityBg from "../../../../assets/images/activity-bg.jpg";
-import footwearBg from "../../../../assets/images/footwear-bg.jpg";
-import campingBg from "../../../../assets/images/camping.jpg";
-import whiteLabelBg from "../../../../assets/images/whitelabel-bg.jpg";
+import heroWhiteLabel from "../../../../assets/images/hero-whitelabel.png";
+import heroRunning from "../../../../assets/images/hero-running.png";
+import heroCamping from "../../../../assets/images/hero-camping.png";
+import heroClimbing from "../../../../assets/images/hero-climbing.png";
+import heroTraining from "../../../../assets/images/hero-training.png";
+import heroHiking from "../../../../assets/images/hero-hiking.png";
 
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
 
@@ -25,31 +22,63 @@ function ProductHero({ currentCategory }) {
   const savedCount =
   Number(localStorage.getItem("cartCount")) || 0;
 
-    const categoryData = {
-    activity: {
-        title: "한계를 넘어서는 움직임",
-        image: activityImage,
-        background: activityBg,
+  const categoryData = {
+    hiking: {
+      title: "MOVE WITH NATURE",
+      subtitle: "도시를 벗어나 자연의 리듬을 따라 걷다",
+      heroImage: heroHiking,
+      layout: "hiking",
+      buttons: ["best", "shop"],
+      position: "center",
     },
-    footwear: {
-        title: "가장 완벽한 한 걸음",
-        image: footwearImage,
-        background: footwearBg,
-    },
-    camping: {
-        title: "자연 속에서, 가장 완벽한 하루",
-        image: campingImage,
-        background: campingBg,
-    },
-    whitelabel: {
-        title: "도시와 자연의 경계를 넘다",
-        image: whiteLabelImage,
-        background: whiteLabelBg,
-    },
-    };
 
-    const currentData =
-      categoryData[currentCategory] || categoryData.camping;
+    running: {
+      title: "RUN THE CITY",
+      subtitle: "도시의 리듬 위를 더 가볍게 달리다",
+      heroImage: heroRunning,
+      layout: "running",
+      buttons: ["best"],
+      position: "center",
+    },
+
+    training: {
+      title: "2026 SUMMER TRAIL",
+      subtitle: "움직이는 순간, 모험이 시작됩니다.",
+      heroImage: heroTraining,
+      layout: "training",
+      buttons: ["best", "shop"],
+      position: "center",
+    },
+
+    camping: {
+      title: "STAY OUTSIDE",
+      subtitle: "자연 속 가장 편안한 순간을 위해",
+      heroImage: heroCamping,
+      layout: "camping",
+      buttons: ["best", "shop"],
+      position: "center",
+    },
+
+    climbing: {
+      title: "CLIMBING ESSENTIALS",
+      subtitle: "극한의 움직임을 위한 설계",
+      heroImage: heroClimbing,
+      layout: "climbing",
+      buttons: ["shop"],
+      position: "center 10%",
+    },
+
+    whitelabel: {
+      title: "도시의 움직임을 위한\n가장 미니멀한 선택",
+      subtitle: "",
+      heroImage: heroWhiteLabel,
+      layout: "whitelabel",
+      buttons: ["shop"],
+      position: "center 28%",
+    },
+  };
+      const currentData =
+        categoryData[currentCategory] || categoryData.hiking;
 
   return (
     <>
@@ -59,11 +88,15 @@ function ProductHero({ currentCategory }) {
         </Link>
 
         <nav className="product-nav">
-          <NavLink to="/products/activity">Activity</NavLink>
+          <NavLink to="/products/hiking">Hiking</NavLink>
 
-          <NavLink to="/products/footwear">Footwear</NavLink>
+          <NavLink to="/products/running">Running</NavLink>
+
+          <NavLink to="/products/training">Training</NavLink>
 
           <NavLink to="/products/camping">Camping</NavLink>
+
+          <NavLink to="/products/climbing">Climbing</NavLink>
 
           <NavLink to="/products/whitelabel">White Label</NavLink>
         </nav>
@@ -95,10 +128,11 @@ function ProductHero({ currentCategory }) {
         </div>
       </header>
 
-      <section
-        className="hero-banner"
+        <section
+          className={`hero-banner hero-${currentData.layout}`}
         style={{
-            backgroundImage: `url(${currentData.background})`,
+          backgroundImage: `url(${currentData.heroImage})`,
+          backgroundPosition: currentData.position,
         }}
         >
         <div className="hero-content">
@@ -115,39 +149,23 @@ function ProductHero({ currentCategory }) {
             >
             <h1>{currentData.title}</h1>
 
-            <p>
-              도시를 벗어난 순간,
-              <br />
-              진짜 편안함이 시작됩니다.
-            </p>
+            <p>{currentData.subtitle}</p>
 
-            <p>
-              노스페이스는 단순히 장비를 만드는 것이 아니라
-              <br />
-              자연 속에서 머무는 시간을 설계합니다.
-            </p>
+          <div className="hero-button-group">
+            {currentData.buttons.includes("best") && (
+              <button className="hero-btn black-btn">
+                베스트 보러가기 <span>→</span>
+              </button>
+            )}
 
-            <p>
-              바람을 막아주는 텐트,
-              <br />
-              체온을 지켜주는 자켓,
-              <br />
-              그리고 그 안에서 완성되는 여유로운 순간까지.
-            </p>
-          </motion.div>
+            {currentData.buttons.includes("shop") && (
+              <button className="hero-btn white-btn">
+                SHOP NOW <span>→</span>
+              </button>
+            )}
+          </div>
 
-          <motion.div
-          key={currentCategory}
-          className="hero-camping-image"
-          initial={{ opacity: 0, x: 60 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{
-              duration: 0.8,
-              ease: "easeOut",
-          }}
-          >
-            <img src={currentData.image} alt={currentCategory} />
-          </motion.div>
+          </motion.div>``
 
         </div>
       </section>

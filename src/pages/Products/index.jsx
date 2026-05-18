@@ -10,7 +10,7 @@ import productsPageStyle from "./Products.styles";
 function Products() {
   const { category } = useParams();
 
-  const currentCategory = category || "camping";
+  const currentCategory = category || "hiking";
 
   useEffect(() => {
     window.scrollTo(0, 0);

@@ -1,21 +1,27 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaFilter } from "react-icons/fa";
+import {
+          FaFilter,
+          FaShoppingCart,
+          FaRegHeart,
+          FaHeart,
+          FaSearchPlus
+        } from "react-icons/fa";
 import "./ProductList.styles.css";
 
-import best1 from "../../../../assets/images/best-1.jpg";
-import best2 from "../../../../assets/images/best-2.jpg";
-import best3 from "../../../../assets/images/best-3.jpg";
-import best4 from "../../../../assets/images/best-4.jpg";
+import hikingBest1 from "../../../../assets/images/hiking-best-1.jpg";
+import hikingBest2 from "../../../../assets/images/hiking-best-2.jpg";
+import hikingBest3 from "../../../../assets/images/hiking-best-3.jpg";
+import hikingBest4 from "../../../../assets/images/hiking-best-4.jpg";
 
-import jacket1 from "../../../../assets/images/jacket-1.jpg";
-import jacket2 from "../../../../assets/images/jacket-2.jpg";
-import jacket3 from "../../../../assets/images/jacket-3.jpg";
-import jacket4 from "../../../../assets/images/jacket-4.jpg";
-import jacket5 from "../../../../assets/images/jacket-5.jpg";
-import jacket6 from "../../../../assets/images/jacket-6.jpg";
-import jacket7 from "../../../../assets/images/jacket-7.jpg";
-import jacket8 from "../../../../assets/images/jacket-8.jpg";
+import hikingProduct1 from "../../../../assets/images/hiking-product-1.jpg";
+import hikingProduct2 from "../../../../assets/images/hiking-product-2.jpg";
+import hikingProduct3 from "../../../../assets/images/hiking-product-3.jpg";
+import hikingProduct4 from "../../../../assets/images/hiking-product-4.jpg";
+import hikingProduct5 from "../../../../assets/images/hiking-product-5.jpg";
+import hikingProduct6 from "../../../../assets/images/hiking-product-6.jpg";
+import hikingProduct7 from "../../../../assets/images/hiking-product-7.jpg";
+import hikingProduct8 from "../../../../assets/images/hiking-product-8.jpg";
 
 import ProductBanner from "../ProductBanner";
 import ProductDetail from "../ProductDetail";
@@ -35,12 +41,52 @@ import white2 from "../../../../assets/images/whitelabel-2.png";
 import white3 from "../../../../assets/images/whitelabel-3.jpg";
 import white4 from "../../../../assets/images/whitelabel-4.jpg";
 
+import running1 from "../../../../assets/images/running-1.jpg";
+import running2 from "../../../../assets/images/running-2.png";
+import running3 from "../../../../assets/images/running-3.jpg";
+import running4 from "../../../../assets/images/running-4.jpg";
+
+import training1 from "../../../../assets/images/trailrunning-1.jpg";
+import training2 from "../../../../assets/images/trailrunning-2.jpg";
+import training3 from "../../../../assets/images/trailrunning-3.jpg";
+import training4 from "../../../../assets/images/trailrunning-4.jpg";
+
+import climbing1 from "../../../../assets/images/climbing-1.jpg";
+import climbing2 from "../../../../assets/images/climbing-2.jpg";
+import climbing3 from "../../../../assets/images/climbing-3.jpg";
+import climbing4 from "../../../../assets/images/climbing-4.jpg";
+
 function ProductCard({ product, isBest }) {
+  const [isLiked, setIsLiked] = useState(false);
+
+  const handleCartClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const savedCount =
+      Number(localStorage.getItem("cartCount")) || 0;
+
+    localStorage.setItem("cartCount", savedCount + 1);
+
+    alert("장바구니에 상품이 담겼습니다.");
+  };
+
+  const handleLikeClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    setIsLiked((prev) => !prev);
+  };
+
   return (
-    <Link to={`/product/${product.id}`} className="product-card">
+    <div className="product-card">
       <div className="product-image-box">
         {isBest && (
-          <span className={`rank-badge ${product.rank === 1 ? "rank-first" : ""}`}>
+          <span
+            className={`rank-badge ${
+              product.rank === 1 ? "rank-first" : ""
+            }`}
+          >
             {product.rank}
           </span>
         )}
@@ -48,19 +94,49 @@ function ProductCard({ product, isBest }) {
         <img src={product.image} alt={product.name} />
 
         {product.badge && (
-          <span className={`product-badge ${product.badge === "SOLD OUT" ? "sold-out" : ""}`}>
+          <span
+            className={`product-badge ${
+              product.badge === "SOLD OUT"
+                ? "sold-out"
+                : ""
+            }`}
+          >
             {product.badge}
           </span>
         )}
 
         <div className="product-overlay">
-          <span>VIEW MORE</span>
+          <button
+            type="button"
+            onClick={handleCartClick}
+          >
+            <FaShoppingCart />
+          </button>
+
+          <Link to={`/product/${product.id}`}>
+            <FaSearchPlus />
+          </Link>
+
+          <button
+            type="button"
+            className={`hover-like-btn ${
+              isLiked ? "liked" : ""
+            }`}
+            onClick={handleLikeClick}
+          >
+            {isLiked ? <FaHeart /> : <FaRegHeart />}
+          </button>
         </div>
       </div>
 
-      <h3>{product.name}</h3>
-      <p>{product.price}</p>
-    </Link>
+      <Link
+        to={`/product/${product.id}`}
+        className="product-text-link"
+      >
+        <h3>{product.name}</h3>
+        <p>{product.price}</p>
+      </Link>
+    </div>
   );
 }
 
@@ -68,15 +144,34 @@ function ProductList({ currentCategory }) {
   const [searchText, setSearchText] = useState("");
   const [sortType, setSortType] = useState("default");
 
-  const categoryImages = {
-    activity: [best1, best2, best3, best4],
-    footwear: [footwear1, footwear2, footwear3, footwear4],
-    camping: [camping1, camping2, camping3, camping4],
-    whitelabel: [white1, white2, white3, white4],
-  };
+const categoryImages = {
+  hiking: [
+    hikingBest1,hikingBest2,hikingBest3,hikingBest4,
+  ],
+
+  running: [
+    running1,running2,running3,running4,
+  ],
+
+  training: [
+    training1,training2,training3,training4,
+  ],
+
+  camping: [
+    camping1,camping2,camping3,camping4,
+  ],
+
+  climbing: [
+    climbing1,climbing2,climbing3,climbing4,
+  ],
+
+  whitelabel: [
+    white1,white2,white3,white4,
+  ],
+};
 
   const currentImages =
-    categoryImages[currentCategory] || categoryImages.activity;
+    categoryImages[currentCategory] || categoryImages.hiking;
 
   const bestProducts = [
     { id: 1, rank: 1, name: "COMPACT EX JKT", price: "135,150 원", image: currentImages[0] },
@@ -86,17 +181,17 @@ function ProductList({ currentCategory }) {
   ];
 
     const jackets =
-    currentCategory === "activity"
+      currentCategory === "hiking"
         ? [
-            { id: 1, name: "Black jacket", price: "186,200 원", image: jacket1 },
-            { id: 2, name: "Brown jacket", price: "186,200 원", image: jacket2, badge: "NEW" },
-            { id: 3, name: "Gray jacket", price: "186,200 원", image: jacket3 },
-            { id: 4, name: "Bogum black jacket", price: "199,000 원", image: jacket4, badge: "SOLD OUT" },
-            { id: 5, name: "Mint jacket", price: "186,200 원", image: jacket5 },
-            { id: 6, name: "White jacket", price: "169,200 원", image: jacket6, badge: "BEST" },
-            { id: 7, name: "Black jacket", price: "169,200 원", image: jacket7 },
-            { id: 8, name: "Apricot jacket", price: "186,200 원", image: jacket8 },
-        ]
+            { id: 1, name: "Black jacket", price: "186,200 원", image: hikingProduct1 },
+            { id: 2, name: "Brown jacket", price: "186,200 원", image: hikingProduct2, badge: "NEW" },
+            { id: 3, name: "Gray jacket", price: "186,200 원", image: hikingProduct3 },
+            { id: 4, name: "Bogum black jacket", price: "199,000 원", image: hikingProduct4, badge: "SOLD OUT" },
+            { id: 5, name: "Mint jacket", price: "186,200 원", image: hikingProduct5 },
+            { id: 6, name: "White jacket", price: "169,200 원", image: hikingProduct6, badge: "BEST" },
+            { id: 7, name: "Black jacket", price: "169,200 원", image: hikingProduct7 },
+            { id: 8, name: "Apricot jacket", price: "186,200 원", image: hikingProduct8 },
+          ]
         : [
             { id: 1, name: "Black jacket", price: "186,200 원", image: currentImages[0] },
             { id: 2, name: "Brown jacket", price: "186,200 원", image: currentImages[1], badge: "NEW" },
@@ -106,7 +201,7 @@ function ProductList({ currentCategory }) {
             { id: 6, name: "White jacket", price: "169,200 원", image: currentImages[1], badge: "BEST" },
             { id: 7, name: "Black jacket", price: "169,200 원", image: currentImages[2] },
             { id: 8, name: "Apricot jacket", price: "186,200 원", image: currentImages[3] },
-        ];
+          ];
 
   const filteredJackets = jackets
     .filter((product) =>

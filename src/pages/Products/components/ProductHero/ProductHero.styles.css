@@ -342,3 +342,242 @@
 .product-nav a.active::after {
   width: 100%;
 }
+.hero-banner {
+  position: relative;
+  height: 620px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  background: rgba(0, 0, 0, 0.32);
+  pointer-events: none;
+}
+
+.hero-banner::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+
+  height: 150px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.28)
+  );
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  padding: 0 80px;
+  box-sizing: border-box;
+}
+
+.hero-hiking .hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.hero-hiking .hero-text {
+  width: 520px;
+  color: #ffffff;
+  text-align: left;
+}
+
+.hero-hiking .hero-text h1 {
+  font-size: 82px;
+  line-height: 1.08;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin: 0 0 22px;
+  text-transform: uppercase;
+}
+
+.hero-hiking .hero-text p {
+  font-size: 24px;
+  line-height: 1.5;
+  margin: 0 0 42px;
+}
+
+.hero-button-group {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.hero-btn {
+  height: 66px;
+  padding: 0 34px;
+
+  border: none;
+  border-radius: 999px;
+
+  font-size: 18px;
+  font-weight: 800;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 22px;
+
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.hero-btn:hover {
+  transform: translateY(-4px);
+  opacity: 0.88;
+}
+
+.black-btn {
+  background: #000000;
+  color: #ffffff;
+}
+
+.white-btn {
+  background: #ffffff;
+  color: #000000;
+}
+
+/* White Label 전용 */
+.hero-whitelabel::before {
+  background: transparent;
+}
+
+.hero-whitelabel::after {
+  height: 190px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.22)
+  );
+}
+
+.hero-whitelabel .hero-content {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+
+  padding-left: 52px;
+  padding-bottom: 58px;
+}
+
+.hero-whitelabel .hero-text {
+  width: 720px;
+  color: #ffffff;
+  text-align: left;
+}
+
+.hero-whitelabel .hero-text h1 {
+  white-space: pre-line;
+  font-size: 54px;
+  line-height: 1.23;
+  font-weight: 500;
+  letter-spacing: -1.5px;
+  margin: 0 0 32px;
+
+  text-shadow:
+  0 3px 14px rgba(0, 0, 0, 0.24),
+  0 1px 3px rgba(0, 0, 0, 0.16);
+
+}
+
+.hero-whitelabel .hero-text p {
+  display: none;
+}
+
+.hero-whitelabel .hero-button-group {
+  margin-top: 0;
+}
+
+.hero-whitelabel .hero-btn {
+  height: 66px;
+  padding: 0 42px;
+  font-size: 18px;
+}
+
+.hero-whitelabel .black-btn {
+  display: none;
+}
+
+/* Climbing 전용 */
+.hero-climbing::after {
+  display: none;
+}
+
+.hero-climbing::before {
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.hero-climbing .hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  padding-left: 60px;
+  padding-right: 70px;
+  padding-bottom: 0;
+}
+
+.hero-climbing .hero-text {
+  width: 1400px;
+  color: #ffffff;
+  text-align: right;
+}
+
+.hero-climbing .hero-text h1 {
+  font-size: 76px;
+  line-height: 1.12;
+  font-weight: 900;
+  letter-spacing: 2px;
+  margin: 0 0 18px;
+  text-transform: uppercase;
+
+  transform: scaleX(0.88) scaleY(1.12);
+  transform-origin: right center;
+
+  white-space: nowrap;
+
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
+}
+
+.hero-climbing .hero-text p {
+  font-size: 24px;
+  line-height: 1.4;
+  font-weight: 400;
+  margin: 0;
+
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+}
+
+.hero-climbing .hero-button-group {
+  position: absolute;
+  left: 60px;
+  bottom: 54px;
+}
+
+.hero-climbing .hero-btn {
+  height: 66px;
+  padding: 0 42px;
+  font-size: 18px;
+}
+
+.hero-climbing .black-btn {
+  display: none;
+}
