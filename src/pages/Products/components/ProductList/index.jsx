@@ -222,14 +222,28 @@ const categoryImages = {
     <section className="product-list-section">
       <div className="section-line" />
 
-      <div className="product-inner">
-        <h2>최신 베스트 셀렉션</h2>
+<div className="product-inner">
 
-        <p className="section-subtitle">
-          이번 주 가장 사랑받은 베스트 아이템
-        </p>
+  <div className="best-title-row">
 
-        <div className="product-grid best-grid">
+    <div>
+      <h2>최신 베스트 셀렉션</h2>
+
+      <p className="section-subtitle">
+        이번 주 가장 사랑받은 베스트 아이템
+      </p>
+    </div>
+
+    <Link
+      to="/best"
+      className="best-more-btn"
+    >
+      베스트 셀렉션 보러가기 →
+    </Link>
+
+  </div>
+
+  <div className="product-grid best-grid">
           {bestProducts.map((product) => (
             <ProductCard
               key={product.id}

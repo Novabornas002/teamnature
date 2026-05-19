@@ -19,8 +19,7 @@ function ProductHero({ currentCategory }) {
   const [searchText, setSearchText] = useState("");
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const savedCount =
-  Number(localStorage.getItem("cartCount")) || 0;
+  const savedCount = Number(localStorage.getItem("cartCount")) || 0;
 
   const categoryData = {
     hiking: {
@@ -33,7 +32,7 @@ function ProductHero({ currentCategory }) {
     },
 
     running: {
-      title: "RUN THE CITY",
+      title: "RUN\nTHE CITY",
       subtitle: "도시의 리듬 위를 더 가볍게 달리다",
       heroImage: heroRunning,
       layout: "running",
@@ -42,8 +41,9 @@ function ProductHero({ currentCategory }) {
     },
 
     training: {
+      eyebrow: "FIND YOUR TRAIL",
       title: "2026 SUMMER TRAIL",
-      subtitle: "움직이는 순간, 모험이 시작됩니다.",
+      subtitle: "자연은 우리의 놀이터,\n움직이는 순간, 모험이 시작된다.",
       heroImage: heroTraining,
       layout: "training",
       buttons: ["best", "shop"],
@@ -55,7 +55,7 @@ function ProductHero({ currentCategory }) {
       subtitle: "자연 속 가장 편안한 순간을 위해",
       heroImage: heroCamping,
       layout: "camping",
-      buttons: ["best", "shop"],
+      buttons: ["shop", "best"],
       position: "center",
     },
 
@@ -77,8 +77,8 @@ function ProductHero({ currentCategory }) {
       position: "center 28%",
     },
   };
-      const currentData =
-        categoryData[currentCategory] || categoryData.hiking;
+
+  const currentData = categoryData[currentCategory] || categoryData.hiking;
 
   return (
     <>
@@ -89,15 +89,10 @@ function ProductHero({ currentCategory }) {
 
         <nav className="product-nav">
           <NavLink to="/products/hiking">Hiking</NavLink>
-
           <NavLink to="/products/running">Running</NavLink>
-
           <NavLink to="/products/training">Training</NavLink>
-
           <NavLink to="/products/camping">Camping</NavLink>
-
           <NavLink to="/products/climbing">Climbing</NavLink>
-
           <NavLink to="/products/whitelabel">White Label</NavLink>
         </nav>
 
@@ -120,53 +115,72 @@ function ProductHero({ currentCategory }) {
             <FaShoppingCart />
 
             {savedCount > 0 && (
-              <span className="hero-cart-count">
-                {savedCount}
-              </span>
+              <span className="hero-cart-count">{savedCount}</span>
             )}
           </button>
         </div>
       </header>
 
-        <section
-          className={`hero-banner hero-${currentData.layout}`}
+      <section
+        className={`hero-banner hero-${currentData.layout}`}
         style={{
           backgroundImage: `url(${currentData.heroImage})`,
           backgroundPosition: currentData.position,
         }}
-        >
+      >
         <div className="hero-content">
 
-            <motion.div
-              key={`text-${currentCategory}`}
-              className="hero-text"
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{
-                  duration: 0.8,
-                  ease: "easeOut",
-              }}
+          <motion.div
+  key={`text-${currentCategory}`}
+  className="hero-text"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{
+    duration: 0.8,
+    ease: "easeOut",
+  }}
+>
+  {currentData.eyebrow && (
+    <strong className="hero-eyebrow">
+      {currentData.eyebrow}
+    </strong>
+  )}
+
+  <h1>{currentData.title}</h1>
+
+  <p>{currentData.subtitle}</p>
+</motion.div>
+
+      <motion.div
+        key={`button-${currentCategory}`}
+        className="hero-button-motion"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 0.8,
+          ease: "easeOut",
+          delay: 0.08,
+        }}
+      >
+        <div className="hero-button-group">
+          {currentData.buttons.includes("shop") && (
+            <a
+              href="https://www.thenorthfacekorea.co.kr/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero-btn white-btn"
             >
-            <h1>{currentData.title}</h1>
+              SHOP NOW <span>→</span>
+            </a>
+          )}
 
-            <p>{currentData.subtitle}</p>
-
-          <div className="hero-button-group">
-            {currentData.buttons.includes("best") && (
-              <button className="hero-btn black-btn">
-                베스트 보러가기 <span>→</span>
-              </button>
-            )}
-
-            {currentData.buttons.includes("shop") && (
-              <button className="hero-btn white-btn">
-                SHOP NOW <span>→</span>
-              </button>
-            )}
-          </div>
-
-          </motion.div>``
-
+          {currentData.buttons.includes("best") && (
+            <button className="hero-btn black-btn">
+              베스트 보러가기 <span>→</span>
+            </button>
+          )}
+        </div>
+      </motion.div>
         </div>
       </section>
 
@@ -181,9 +195,7 @@ function ProductHero({ currentCategory }) {
         <div className="product-side-cart-header">
           <h3>장바구니</h3>
 
-          <button onClick={() => setIsCartOpen(false)}>
-            ×
-          </button>
+          <button onClick={() => setIsCartOpen(false)}>×</button>
         </div>
 
         {savedCount > 0 ? (
@@ -195,9 +207,7 @@ function ProductHero({ currentCategory }) {
             </p>
 
             <p className="product-empty-cart">
-              총 금액 :
-              {" "}
-              {(135150 * savedCount).toLocaleString()}원
+              총 금액 : {(135150 * savedCount).toLocaleString()}원
             </p>
           </>
         ) : (
