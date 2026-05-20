@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { FaArrowUp } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 import "./ProductDetailPage.styles.css";
@@ -6,11 +7,11 @@ import "./ProductDetailPage.styles.css";
 
 import logo from "../../assets/images/logo.png";
 
-import thumb1 from "../../assets/images/detail-thumb-1.jpg";
-import thumb2 from "../../assets/images/detail-thumb-2.jpg";
-import thumb3 from "../../assets/images/detail-thumb-3.jpg";
-import thumb4 from "../../assets/images/detail-thumb-4.jpg";
-import thumb5 from "../../assets/images/detail-thumb-5.jpg";
+import thumb1 from "../../assets/images/detail/detail-thumb-1.jpg";
+import thumb2 from "../../assets/images/detail/detail-thumb-2.jpg";
+import thumb3 from "../../assets/images/detail/detail-thumb-3.jpg";
+import thumb4 from "../../assets/images/detail/detail-thumb-4.jpg";
+import thumb5 from "../../assets/images/detail/detail-thumb-5.jpg";
 
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
 
@@ -33,6 +34,7 @@ function ProductDetailPage() {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const [selectedImage, setSelectedImage] = useState(null);
+  const [showTopButton, setShowTopButton] = useState(false);
 
   const isCartAdded = cartCount > 0;
   const totalPrice = productPrice * cartCount;
@@ -79,6 +81,25 @@ function ProductDetailPage() {
   useEffect(() => {
     localStorage.setItem("cartCount", cartCount);
   }, [cartCount]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowTopButton(window.scrollY > 500);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };  
 
   return (
     <main className="detail-page">
@@ -416,6 +437,15 @@ function ProductDetailPage() {
         </div>
 
         <Footer />
+
+    {showTopButton && (
+      <button
+        className="detail-top-button"
+        onClick={scrollToTop}
+      >
+        <FaArrowUp />
+      </button>
+    )}
 
     </main>
   );

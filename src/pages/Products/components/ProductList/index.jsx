@@ -9,19 +9,19 @@ import {
         } from "react-icons/fa";
 import "./ProductList.styles.css";
 
-import hikingBest1 from "../../../../assets/images/hiking-best-1.jpg";
-import hikingBest2 from "../../../../assets/images/hiking-best-2.jpg";
-import hikingBest3 from "../../../../assets/images/hiking-best-3.jpg";
-import hikingBest4 from "../../../../assets/images/hiking-best-4.jpg";
+import hikingBest1 from "../../../../assets/images/products/hiking/hiking-best-1.jpg";
+import hikingBest2 from "../../../../assets/images/products/hiking/hiking-best-2.jpg";
+import hikingBest3 from "../../../../assets/images/products/hiking/hiking-best-3.jpg";
+import hikingBest4 from "../../../../assets/images/products/hiking/hiking-best-4.jpg";
 
-import hikingProduct1 from "../../../../assets/images/hiking-product-1.jpg";
-import hikingProduct2 from "../../../../assets/images/hiking-product-2.jpg";
-import hikingProduct3 from "../../../../assets/images/hiking-product-3.jpg";
-import hikingProduct4 from "../../../../assets/images/hiking-product-4.jpg";
-import hikingProduct5 from "../../../../assets/images/hiking-product-5.jpg";
-import hikingProduct6 from "../../../../assets/images/hiking-product-6.jpg";
-import hikingProduct7 from "../../../../assets/images/hiking-product-7.jpg";
-import hikingProduct8 from "../../../../assets/images/hiking-product-8.jpg";
+import hikingProduct1 from "../../../../assets/images/products/hiking/hiking-product-1.jpg";
+import hikingProduct2 from "../../../../assets/images/products/hiking/hiking-product-2.jpg";
+import hikingProduct3 from "../../../../assets/images/products/hiking/hiking-product-3.jpg";
+import hikingProduct4 from "../../../../assets/images/products/hiking/hiking-product-4.jpg";
+import hikingProduct5 from "../../../../assets/images/products/hiking/hiking-product-5.jpg";
+import hikingProduct6 from "../../../../assets/images/products/hiking/hiking-product-6.jpg";
+import hikingProduct7 from "../../../../assets/images/products/hiking/hiking-product-7.jpg";
+import hikingProduct8 from "../../../../assets/images/products/hiking/hiking-product-8.jpg";
 
 import ProductBanner from "../ProductBanner";
 import ProductDetail from "../ProductDetail";
@@ -31,30 +31,30 @@ import footwear2 from "../../../../assets/images/footwear-2.png";
 import footwear3 from "../../../../assets/images/footwear-3.png";
 import footwear4 from "../../../../assets/images/footwear-4.png";
 
-import camping1 from "../../../../assets/images/Camping-1.jpg";
-import camping2 from "../../../../assets/images/Camping-2.jpg";
-import camping3 from "../../../../assets/images/Camping-3.jpg";
-import camping4 from "../../../../assets/images/Camping-4.jpg";
+import camping1 from "../../../../assets/images/products/camping/camping-1.jpg";
+import camping2 from "../../../../assets/images/products/camping/camping-2.jpg";
+import camping3 from "../../../../assets/images/products/camping/camping-3.jpg";
+import camping4 from "../../../../assets/images/products/camping/camping-4.jpg";
 
-import white1 from "../../../../assets/images/whitelabel-1.png";
-import white2 from "../../../../assets/images/whitelabel-2.png";
-import white3 from "../../../../assets/images/whitelabel-3.jpg";
-import white4 from "../../../../assets/images/whitelabel-4.jpg";
+import white1 from "../../../../assets/images/products/whitelabel/whitelabel-1.png";
+import white2 from "../../../../assets/images/products/whitelabel/whitelabel-2.png";
+import white3 from "../../../../assets/images/products/whitelabel/whitelabel-3.jpg";
+import white4 from "../../../../assets/images/products/whitelabel/whitelabel-4.jpg";
 
-import running1 from "../../../../assets/images/running-1.jpg";
-import running2 from "../../../../assets/images/running-2.png";
-import running3 from "../../../../assets/images/running-3.jpg";
-import running4 from "../../../../assets/images/running-4.jpg";
+import running1 from "../../../../assets/images/products/running/running-1.jpg";
+import running2 from "../../../../assets/images/products/running/running-2.png";
+import running3 from "../../../../assets/images/products/running/running-3.jpg";
+import running4 from "../../../../assets/images/products/running/running-4.jpg";
 
-import training1 from "../../../../assets/images/trailrunning-1.jpg";
-import training2 from "../../../../assets/images/trailrunning-2.jpg";
-import training3 from "../../../../assets/images/trailrunning-3.jpg";
-import training4 from "../../../../assets/images/trailrunning-4.jpg";
+import training1 from "../../../../assets/images/products/training/trailrunning-1.jpg";
+import training2 from "../../../../assets/images/products/training/trailrunning-2.jpg";
+import training3 from "../../../../assets/images/products/training/trailrunning-3.jpg";
+import training4 from "../../../../assets/images/products/training/trailrunning-4.jpg";
 
-import climbing1 from "../../../../assets/images/climbing-1.jpg";
-import climbing2 from "../../../../assets/images/climbing-2.jpg";
-import climbing3 from "../../../../assets/images/climbing-3.jpg";
-import climbing4 from "../../../../assets/images/climbing-4.jpg";
+import climbing1 from "../../../../assets/images/products/climbing/climbing-1.jpg";
+import climbing2 from "../../../../assets/images/products/climbing/climbing-2.jpg";
+import climbing3 from "../../../../assets/images/products/climbing/climbing-3.jpg";
+import climbing4 from "../../../../assets/images/products/climbing/climbing-4.jpg";
 
 function ProductCard({ product, isBest }) {
   const [isLiked, setIsLiked] = useState(false);

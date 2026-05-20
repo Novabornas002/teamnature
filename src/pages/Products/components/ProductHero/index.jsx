@@ -6,12 +6,12 @@ import "./ProductHero.styles.css";
 
 import logo from "../../../../assets/images/north-logo1.png";
 
-import heroWhiteLabel from "../../../../assets/images/hero-whitelabel.png";
-import heroRunning from "../../../../assets/images/hero-running.png";
-import heroCamping from "../../../../assets/images/hero-camping.png";
-import heroClimbing from "../../../../assets/images/hero-climbing.png";
-import heroTraining from "../../../../assets/images/hero-training.png";
-import heroHiking from "../../../../assets/images/hero-hiking.png";
+import heroWhiteLabel from "../../../../assets/images/hero/hero-whitelabel.png";
+import heroRunning from "../../../../assets/images/hero/hero-running.png";
+import heroCamping from "../../../../assets/images/hero/hero-camping.png";
+import heroClimbing from "../../../../assets/images/hero/hero-climbing.png";
+import heroTraining from "../../../../assets/images/hero/hero-training.png";
+import heroHiking from "../../../../assets/images/hero/hero-hiking.png";
 
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
 
