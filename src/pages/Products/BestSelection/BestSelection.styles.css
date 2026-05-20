@@ -1,0 +1,443 @@
+.best-page {
+  width: 100%;
+  background: #ffffff;
+  color: #000000;
+}
+
+.best-header {
+  width: 100%;
+  height: 110px;
+  padding: 0 58px;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.best-logo {
+  width: 110px;
+  display: block;
+}
+
+.best-header-icons {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.best-search-box {
+  width: 220px;
+  height: 48px;
+  padding: 0 18px;
+  box-sizing: border-box;
+
+  border: 3px solid #0b1b3a;
+  border-radius: 999px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.best-search-box input {
+  flex: 1;
+  min-width: 0;
+
+  border: none;
+  outline: none;
+  background: transparent;
+
+  font-size: 15px;
+  color: #111111;
+}
+
+.best-search-box svg {
+  flex-shrink: 0;
+  color: #0b1b3a;
+  font-size: 28px;
+}
+
+.best-cart-icon {
+  color: #0b1b3a;
+  font-size: 30px;
+}
+
+.best-title-section {
+  position: relative;
+  text-align: center;
+  padding: 52px 0 34px;
+}
+
+.best-title-section h1 {
+  margin: 0;
+  font-size: 46px;
+  font-weight: 900;
+}
+
+.best-title-section p {
+  margin: 16px 0 0;
+  font-size: 22px;
+  color: #777777;
+}
+
+.best-back-btn {
+  position: absolute;
+  left: 64px;
+  top: 72px;
+
+  color: #000000;
+  font-size: 26px;
+}
+
+.best-category-nav {
+  width: calc(100% - 120px);
+  max-width: 1180px;
+  margin: 0 auto 70px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 36px;
+}
+
+.best-category-nav button {
+  border: none;
+  background: none;
+  color: #777777;
+
+  font-size: 23px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.best-category-nav button.active {
+  color: #000000;
+}
+
+.best-content {
+  width: calc(100% - 120px);
+  max-width: 1500px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+
+  transition: grid-template-columns 0.35s ease;
+}
+
+.best-content.filter-open {
+  grid-template-columns: 190px 1fr;
+}
+
+.filter-toggle-btn {
+  border: none;
+  background: none;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  cursor: pointer;
+}
+
+.filter-panel {
+  margin-top: 48px;
+  padding-right: 22px;
+  border-right: 1px solid #222222;
+}
+
+.filter-panel h3 {
+  font-size: 14px;
+  margin: 0 0 18px;
+}
+
+.filter-group {
+  padding: 18px 0;
+  border-top: 1px solid #dddddd;
+}
+
+.filter-group h4 {
+  margin: 0 0 14px;
+  font-size: 14px;
+}
+
+.filter-group label {
+  margin-bottom: 10px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 13px;
+  color: #333333;
+}
+
+.best-product-area {
+  min-width: 0;
+}
+
+.best-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 70px 18px;
+}
+
+.best-card {
+  min-width: 0;
+  transition: all 0.3s ease;
+}
+
+.best-image-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+
+  background: #f5f5f5;
+  overflow: hidden;
+}
+
+.best-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  transition: transform 0.4s ease;
+}
+
+.best-image-box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: rgba(0,0,0,0.18);
+
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.best-card:hover .best-image-box::after {
+  opacity: 1;
+}
+
+.best-card:hover img {
+  transform: scale(1.05);
+}
+
+.best-card:hover .best-image-box {
+  box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+}
+
+.rank {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+
+  width: 28px;
+  height: 28px;
+
+  background: #000000;
+  color: #ffffff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.rank.first {
+  background: #d6001c;
+}
+
+.best-card h3 {
+  margin: 18px 0 6px;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.best-card p {
+  margin: 0;
+  font-size: 15px;
+}
+
+.best-pagination {
+  margin: 80px 0;
+
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.best-pagination button {
+  width: 24px;
+  height: 24px;
+
+  border: 1px solid #dddddd;
+  background: #ffffff;
+
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.best-pagination button.active {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+}
+
+/* 필터 닫힘 상태: 왼쪽 공간 없애기 */
+.best-content {
+  grid-template-columns: 1fr;
+}
+
+/* 필터 열림 상태: 왼쪽 필터 영역 생성 */
+.best-content.filter-open {
+  grid-template-columns: 190px 1fr;
+}
+
+/* 필터 버튼을 위쪽으로 올리기 */
+.best-filter-area {
+  position: absolute;
+  left: 58px;
+  margin-top: -96px;
+  z-index: 5;
+}
+
+/* 필터가 닫혔을 때는 패널 흔적 없음 */
+.filter-panel {
+  background: #ffffff;
+}
+
+/* 상품 영역은 항상 오른쪽 그리드만 차지 */
+.best-product-area {
+  grid-column: 1;
+}
+
+.best-content.filter-open .best-product-area {
+  grid-column: 2;
+}
+
+/* 필터 열렸을 때 제품과 필터 사이 간격 줄이기 */
+.best-content.filter-open {
+  grid-template-columns: 210px 1fr;
+  gap: 22px;
+}
+
+/* 필터 패널 폭 정리 */
+.filter-panel {
+  width: 210px;
+  padding-right: 24px;
+}
+
+/* 필터 오른쪽 세로선 위치를 더 가깝게 */
+.best-content.filter-open .best-filter-area {
+  width: 210px;
+}
+
+/* 체크박스와 글씨 간격 넓히기 */
+.filter-group label {
+  display: grid;
+  grid-template-columns: 1fr 18px;
+  column-gap: 28px;
+  align-items: center;
+}
+
+.filter-group input {
+  justify-self: end;
+}
+
+/* Best 상품 카드 hover 효과 */
+.best-card {
+  cursor: pointer;
+}
+
+.best-card h3 {
+  transition: color 0.3s ease;
+}
+
+.best-card:hover h3 {
+  color: #d6001c;
+}
+
+.best-image-box {
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.best-image-box img {
+  transition: transform 0.4s ease;
+}
+
+.best-card:hover .best-image-box {
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+}
+
+.best-card:hover .best-image-box img {
+  transform: scale(1.06);
+}
+
+.best-hover-icons {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 5;
+
+  display: flex;
+  gap: 12px;
+
+  opacity: 0;
+  transform: translate(-50%, -44%);
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.best-card:hover .best-hover-icons {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
+.best-hover-icons button {
+  width: 44px;
+  height: 44px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.96);
+  color: #111111;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 17px;
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.best-hover-icons button:hover {
+  background: #d6001c;
+  color: #ffffff;
+  transform: translateY(-4px);
+}
+
+.best-hover-icons button.liked {
+  background: #d6001c;
+  color: #ffffff;
+}

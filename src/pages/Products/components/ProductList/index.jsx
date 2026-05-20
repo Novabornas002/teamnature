@@ -235,7 +235,7 @@ const categoryImages = {
     </div>
 
     <Link
-      to="/best"
+      to="/products/best"
       className="best-more-btn"
     >
       베스트 셀렉션 보러가기 →

@@ -175,9 +175,9 @@ function ProductHero({ currentCategory }) {
           )}
 
           {currentData.buttons.includes("best") && (
-            <button className="hero-btn black-btn">
-              베스트 보러가기 <span>→</span>
-            </button>
+          <Link to="/products/best" className="hero-btn black-btn">
+            베스트 보러가기 <span>→</span>
+          </Link>
           )}
         </div>
       </motion.div>

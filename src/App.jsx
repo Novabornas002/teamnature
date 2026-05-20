@@ -5,11 +5,13 @@ import NotFound from './pages/NotFound';
 
 import Products from './pages/Products';
 import ProductDetailPage from './pages/ProductDetailPage';
+import BestSelection from './pages/Products/BestSelection';
 
 import NewsroomSub from './pages/NewsroomSub';
 import TechSub from './pages/TechSub';
 import HistoryPage from './pages/HistoryPage';
 import ScrollToTop from './components/common/ScrollToTop';
+
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
 
         {/* 상품 페이지 */}
         <Route path="/products" element={<Products />} />
+        <Route path="/products/best" element={<BestSelection />} />
         <Route path="/products/:category" element={<Products />} />
         <Route path="/product/:id" element={<ProductDetailPage />} />
 
