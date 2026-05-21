@@ -199,6 +199,16 @@
   background: #c90016;
 }
 
+.rank-badge {
+  z-index: 20;
+  filter: none !important;
+}
+
+.product-card:hover .rank-badge {
+  filter: none !important;
+  opacity: 1;
+}
+
 /* 검색 */
 .product-search-area {
   width: 100%;

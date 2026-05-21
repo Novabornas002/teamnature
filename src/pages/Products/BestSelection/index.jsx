@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   FaSearch,
@@ -116,10 +116,39 @@ function BestSelection() {
   const [likedItems, setLikedItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const [savedCount, setSavedCount] = useState(
+    Number(localStorage.getItem("cartCount")) || 0
+  );
+
+  const [cartItems, setCartItems] = useState(
+    JSON.parse(localStorage.getItem("cartItems")) || []
+  );
+
+    useEffect(() => {
+    const updateCart = () => {
+      const newItems =
+        JSON.parse(localStorage.getItem("cartItems")) || [];
+
+      const newCount =
+        Number(localStorage.getItem("cartCount")) || 0;
+
+      setCartItems(newItems);
+      setSavedCount(newCount);
+    };
+
+    window.addEventListener("storage", updateCart);
+
+    return () => {
+      window.removeEventListener("storage", updateCart);
+    };
+  }, []);
+
   const currentImages = productImages[activeCategory];
   const currentNames = productNames[activeCategory];
 
-  const allProducts = Array.from({ length: 32 }, (_, index) => {
+  const allProducts = Array.from({ length: 30 }, (_, index) => {
     const itemIndex = index % 4;
 
     return {
@@ -136,13 +165,49 @@ const products = allProducts.slice(
   currentPage * 16
 );
 
-  const handleCartClick = (event) => {
+  const handleCartClick = (event, product) => {
+    event.preventDefault();
     event.stopPropagation();
 
-    const savedCount = Number(localStorage.getItem("cartCount")) || 0;
-    localStorage.setItem("cartCount", savedCount + 1);
+    const savedItems =
+      JSON.parse(localStorage.getItem("cartItems")) || [];
 
-    alert("장바구니에 상품이 담겼습니다.");
+    const cartProduct = {
+      id: `${activeCategory}-best-${product.rank}`,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity: 1,
+    };
+
+    const existingItem = savedItems.find(
+      (item) => item.id === cartProduct.id
+    );
+
+    let updatedItems;
+
+    if (existingItem) {
+      updatedItems = savedItems.map((item) =>
+        item.id === cartProduct.id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+    } else {
+      updatedItems = [...savedItems, cartProduct];
+    }
+
+    localStorage.setItem("cartItems", JSON.stringify(updatedItems));
+
+    const totalCount = updatedItems.reduce(
+      (total, item) => total + item.quantity,
+      0
+    );
+
+    localStorage.setItem("cartCount", totalCount);
+
+    window.dispatchEvent(new Event("storage"));
+
+    alert(`${product.name} 상품이 장바구니에 담겼습니다.`);
   };
 
   const handleLikeClick = (event, productId) => {
@@ -160,6 +225,60 @@ const products = allProducts.slice(
     navigate(`/product/${productId}`);
   };
 
+    const updateQuantity = (id, type) => {
+    const updatedItems = cartItems
+      .map((item) => {
+        if (item.id !== id) return item;
+
+        return {
+          ...item,
+          quantity:
+            type === "increase"
+              ? item.quantity + 1
+              : item.quantity - 1,
+        };
+      })
+      .filter((item) => item.quantity > 0);
+
+    setCartItems(updatedItems);
+    localStorage.setItem("cartItems", JSON.stringify(updatedItems));
+
+    const totalCount = updatedItems.reduce(
+      (total, item) => total + item.quantity,
+      0
+    );
+
+    setSavedCount(totalCount);
+    localStorage.setItem("cartCount", totalCount);
+  };
+
+  const toggleCheckItem = (id) => {
+    const updatedItems = cartItems.map((item) =>
+      item.id === id
+        ? { ...item, checked: item.checked === false ? true : false }
+        : item
+    );
+
+    setCartItems(updatedItems);
+    localStorage.setItem("cartItems", JSON.stringify(updatedItems));
+  };
+
+  const checkedItems = cartItems.filter((item) => item.checked !== false);
+
+  const checkedCount = checkedItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+
+  const totalPrice = checkedItems.reduce((total, item) => {
+    const priceNumber = Number(item.price.replace(/[^\d]/g, ""));
+    return total + priceNumber * item.quantity;
+  }, 0);
+
+  const handleCheckout = () => {
+    alert("결제 페이지로 이동합니다.");
+  };
+
   return (
     <main className="best-page">
       <header className="best-header">
@@ -169,11 +288,34 @@ const products = allProducts.slice(
 
         <div className="best-header-icons">
           <div className="best-search-box">
-            <input type="text" />
+            <input
+              type="text"
+              placeholder="상품 검색"
+            />
             <FaSearch />
           </div>
 
-          <FaShoppingCart className="best-cart-icon" />
+            <button
+              className="best-cart-button"
+              onClick={() => {
+                const newItems =
+                  JSON.parse(localStorage.getItem("cartItems")) || [];
+
+                const newCount =
+                  Number(localStorage.getItem("cartCount")) || 0;
+
+                setCartItems(newItems);
+                setSavedCount(newCount);
+                setIsCartOpen(true);
+              }}
+            >
+              <FaShoppingCart />
+
+              {savedCount > 0 && (
+                <span className="best-cart-count">{savedCount}</span>
+              )}
+            </button>
+
         </div>
       </header>
 
@@ -183,7 +325,7 @@ const products = allProducts.slice(
         </Link>
 
         <h1>최신 베스트 셀렉션</h1>
-        <p>이번 주 가장 사랑받은 베스트 TOP 20</p>
+        <p>이번 주 가장 사랑받은 베스트 TOP 30</p>
       </section>
 
       <nav className="best-category-nav">
@@ -257,7 +399,7 @@ const products = allProducts.slice(
                     <div className="best-hover-icons">
                       <button
                         type="button"
-                        onClick={handleCartClick}
+                        onClick={(event) => handleCartClick(event, product)}
                         aria-label="장바구니"
                       >
                         <FaShoppingCart />
@@ -312,6 +454,90 @@ const products = allProducts.slice(
       </section>
 
       <Footer />
+        {isCartOpen && (
+          <div
+            className="best-cart-overlay"
+            onClick={() => setIsCartOpen(false)}
+          />
+        )}
+
+        <div className={`best-side-cart ${isCartOpen ? "open" : ""}`}>
+          <div className="best-side-cart-header">
+            <h3>장바구니</h3>
+            <button onClick={() => setIsCartOpen(false)}>×</button>
+          </div>
+
+          {cartItems.length > 0 ? (
+  <>
+          {cartItems.map((item) => (
+            <div className="best-cart-item" key={item.id}>
+              <input
+                type="checkbox"
+                className="best-cart-check"
+                checked={item.checked !== false}
+                onChange={() => toggleCheckItem(item.id)}
+              />
+
+              <img src={item.image} alt={item.name} />
+
+              <div className="best-cart-info">
+                <p>{item.name}</p>
+                <span>{item.price}</span>
+
+                <div className="best-cart-quantity">
+                  <button onClick={() => updateQuantity(item.id, "decrease")}>
+                    -
+                  </button>
+
+                  <strong>{item.quantity}</strong>
+
+                  <button onClick={() => updateQuantity(item.id, "increase")}>
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          <div className="best-cart-summary">
+            <p>선택 수량 : {checkedCount}개</p>
+            <strong>선택 금액 : {totalPrice.toLocaleString()} 원</strong>
+          </div>
+        </>
+      ) : (
+        <p className="best-empty-cart">
+          아직 담긴 상품이 없습니다.
+        </p>
+      )}
+
+          <button
+            className="best-cart-clear-btn"
+            onClick={() => {
+              localStorage.removeItem("cartItems");
+              localStorage.setItem("cartCount", 0);
+              setCartItems([]);
+              setSavedCount(0);
+            }}
+          >
+            장바구니 비우기
+          </button>
+
+          <button
+            className="best-cart-close-btn"
+            onClick={() => setIsCartOpen(false)}
+          >
+            계속 쇼핑하기
+          </button>
+
+          <button
+            className="best-cart-checkout-btn"
+            onClick={handleCheckout}
+          >
+            결제하기
+          </button>
+
+        </div>
+
     </main>
   );
 }

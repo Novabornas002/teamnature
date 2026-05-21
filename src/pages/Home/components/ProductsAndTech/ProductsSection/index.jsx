@@ -1,10 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-import productActivity from '../../../../../assets/images/product-activity.jpg';
-import productFootwear from '../../../../../assets/images/product-footwear.jpg';
-import productCamping from '../../../../../assets/images/product-camping.jpg';
-import productWhitelabel from '../../../../../assets/images/product-whitelabel.jpg';
+import productHiking from '../../../../../assets/images/product-main/hiking.jpg';
+import productRunning from '../../../../../assets/images/product-main/running.png';
+import productTrail from '../../../../../assets/images/product-main/trail.png';
+import productClimbing from '../../../../../assets/images/product-main/climbing.png';
+import productCamping from '../../../../../assets/images/product-main/camping.jpg';
+import productWhitelabel from '../../../../../assets/images/product-main/whitelabel.jpg';
 
 import {
   ProductsWrapper,
@@ -12,41 +14,19 @@ import {
   SectionHeader,
   SectionTitle,
   SectionSubtitle,
-  BannerList,
-  Banner,
-  BannerImage,
-  BannerLabel,
+  CardGrid,
+  Card,
+  CardImage,
+  CardLabel,
 } from './ProductsSection.styles';
 
 const PRODUCTS_DATA = [
-  {
-    id: 1,
-    label: 'Activity',
-    image: productActivity,
-    path: '/products/activity',
-    align: 'right',
-  },
-  {
-    id: 2,
-    label: 'Footwear',
-    image: productFootwear,
-    path: '/products/footwear',
-    align: 'left',
-  },
-  {
-    id: 3,
-    label: 'Camping',
-    image: productCamping,
-    path: '/products/camping',
-    align: 'right',
-  },
-  {
-    id: 4,
-    label: 'White Label',
-    image: productWhitelabel,
-    path: '/products/whitelabel',
-    align: 'left',
-  },
+  { id: 1, label: '하이킹', image: productHiking, path: '/products/hiking' },
+  { id: 2, label: '러닝', image: productRunning, path: '/products/running' },
+  { id: 3, label: '트레일 러닝', image: productTrail, path: '/products/trail' },
+  { id: 4, label: '클라이밍', image: productClimbing, path: '/products/climbing' },
+  { id: 5, label: '캠핑', image: productCamping, path: '/products/camping' },
+  { id: 6, label: '화이트 레벨', image: productWhitelabel, path: '/products/whitelabel' },
 ];
 
 function ProductsSection() {
@@ -60,27 +40,22 @@ function ProductsSection() {
           <SectionSubtitle>기능성과 스타일을 모두 담은 노스페이스 컬렉션</SectionSubtitle>
         </SectionHeader>
 
-        <BannerList>
+        <CardGrid>
           {PRODUCTS_DATA.map((item, idx) => (
-            <Banner
+            <Card
               key={item.id}
-              $align={item.align}
-              onClick={() => navigate(item.path)}
               as={motion.button}
-              initial={{ opacity: 0, x: item.align === 'right' ? 60 : -60 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              onClick={() => navigate(item.path)}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
-              transition={{
-                duration: 0.7,
-                delay: idx * 0.1,
-                ease: 'easeOut',
-              }}
+              transition={{ duration: 0.5, delay: idx * 0.08, ease: 'easeOut' }}
             >
-              <BannerImage style={{ backgroundImage: `url(${item.image})` }} />
-              <BannerLabel>{item.label}</BannerLabel>
-            </Banner>
+              <CardImage style={{ backgroundImage: `url(${item.image})` }} />
+              <CardLabel>{item.label} &gt;</CardLabel>
+            </Card>
           ))}
-        </BannerList>
+        </CardGrid>
       </Container>
     </ProductsWrapper>
   );

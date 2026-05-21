@@ -33,14 +33,62 @@ function ProductDetailPage() {
   const [showNotice, setShowNotice] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
+  const [cartItems, setCartItems] = useState(() => {
+    return JSON.parse(localStorage.getItem("cartItems")) || [];
+  });
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [showTopButton, setShowTopButton] = useState(false);
+  
 
   const isCartAdded = cartCount > 0;
-  const totalPrice = productPrice * cartCount;
+  const totalPrice = cartItems.reduce((total, item) => {
+    const priceNumber = Number(
+      item.price.replace(/[^\d]/g, "")
+    );
+
+    return total + priceNumber * item.quantity;
+  }, 0);
 
   const handleCartClick = () => {
-    setCartCount((prev) => prev + 1);
+    const newItem = {
+      id: "detail-compact-ex-jkt",
+      name: "COMPACT EX JKT",
+      price: "135,150 원",
+      image: thumb1,
+      quantity: 1,
+    };
+
+    const savedItems =
+      JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    const existingItem = savedItems.find(
+      (item) => item.id === newItem.id
+    );
+
+    let updatedItems;
+
+    if (existingItem) {
+      updatedItems = savedItems.map((item) =>
+        item.id === newItem.id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+    } else {
+      updatedItems = [...savedItems, newItem];
+    }
+
+    localStorage.setItem("cartItems", JSON.stringify(updatedItems));
+
+    const totalCount = updatedItems.reduce(
+      (total, item) => total + item.quantity,
+      0
+    );
+
+    localStorage.setItem("cartCount", totalCount);
+
+    setCartItems(updatedItems);
+    setCartCount(totalCount);
     setShowNotice(true);
     setIsCartOpen(true);
 
@@ -58,6 +106,10 @@ function ProductDetailPage() {
   };
 
   const handleClearCart = () => {
+    localStorage.removeItem("cartItems");
+    localStorage.setItem("cartCount", 0);
+
+    setCartItems([]);
     setCartCount(0);
   };
 
@@ -93,6 +145,22 @@ function ProductDetailPage() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+    useEffect(() => {
+    if (isCartOpen) {
+      const savedItems =
+        JSON.parse(localStorage.getItem("cartItems")) || [];
+
+      setCartItems(savedItems);
+
+      const totalCount = savedItems.reduce(
+        (total, item) => total + item.quantity,
+        0
+      );
+
+      setCartCount(totalCount);
+    }
+  }, [isCartOpen]);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -374,25 +442,23 @@ function ProductDetailPage() {
           <button onClick={() => setIsCartOpen(false)}>×</button>
         </div>
 
-        {cartCount > 0 ? (
+        {cartItems.length > 0 ? (
           <>
-            <div className="side-cart-item">
-              <img src={thumb1} alt="상품" />
+            {cartItems.map((item) => (
+              <div className="side-cart-item" key={item.id}>
+                <img src={item.image} alt={item.name} />
 
-              <div>
-                <p>COMPACT EX JKT</p>
-                <div className="cart-quantity-control">
-                  <button onClick={handleDecreaseCart}>-</button>
-                  <span>{cartCount}</span>
-                  <button onClick={handleIncreaseCart}>+</button>
+                <div className="side-cart-info">
+                  <p>{item.name}</p>
+                  <span>{item.price}</span>
+                  <strong>수량 : {item.quantity}</strong>
                 </div>
-                <strong>{totalPrice.toLocaleString()}원</strong>
               </div>
-            </div>
+            ))}
 
             <div className="side-cart-price">
-              <span>총 금액</span>
-              <strong>{totalPrice.toLocaleString()}원</strong>
+              <span>총 수량</span>
+              <strong>{cartCount}개</strong>
             </div>
           </>
         ) : (

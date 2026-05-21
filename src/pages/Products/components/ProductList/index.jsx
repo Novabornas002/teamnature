@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-          FaFilter,
-          FaShoppingCart,
-          FaRegHeart,
-          FaHeart,
-          FaSearchPlus
-        } from "react-icons/fa";
+  FaFilter,
+  FaShoppingCart,
+  FaRegHeart,
+  FaHeart,
+  FaSearchPlus,
+} from "react-icons/fa";
 import "./ProductList.styles.css";
 
 import hikingBest1 from "../../../../assets/images/products/hiking/hiking-best-1.jpg";
@@ -25,11 +25,6 @@ import hikingProduct8 from "../../../../assets/images/products/hiking/hiking-pro
 
 import ProductBanner from "../ProductBanner";
 import ProductDetail from "../ProductDetail";
-
-import footwear1 from "../../../../assets/images/footwear-1.jpg";
-import footwear2 from "../../../../assets/images/footwear-2.png";
-import footwear3 from "../../../../assets/images/footwear-3.png";
-import footwear4 from "../../../../assets/images/footwear-4.png";
 
 import camping1 from "../../../../assets/images/products/camping/camping-1.jpg";
 import camping2 from "../../../../assets/images/products/camping/camping-2.jpg";
@@ -63,12 +58,45 @@ function ProductCard({ product, isBest }) {
     event.preventDefault();
     event.stopPropagation();
 
-    const savedCount =
-      Number(localStorage.getItem("cartCount")) || 0;
+    const savedItems =
+      JSON.parse(localStorage.getItem("cartItems")) || [];
 
-    localStorage.setItem("cartCount", savedCount + 1);
+    const cartProduct = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity: 1,
+    };
 
-    alert("장바구니에 상품이 담겼습니다.");
+    const existingItem = savedItems.find(
+      (item) => item.id === cartProduct.id
+    );
+
+    let updatedItems;
+
+    if (existingItem) {
+      updatedItems = savedItems.map((item) =>
+        item.id === cartProduct.id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+    } else {
+      updatedItems = [...savedItems, cartProduct];
+    }
+
+    localStorage.setItem("cartItems", JSON.stringify(updatedItems));
+
+    const totalCount = updatedItems.reduce(
+      (total, item) => total + item.quantity,
+      0
+    );
+
+    localStorage.setItem("cartCount", totalCount);
+
+    window.dispatchEvent(new Event("storage"));
+
+    alert(`${product.name} 상품이 장바구니에 담겼습니다.`);
   };
 
   const handleLikeClick = (event) => {
@@ -96,9 +124,7 @@ function ProductCard({ product, isBest }) {
         {product.badge && (
           <span
             className={`product-badge ${
-              product.badge === "SOLD OUT"
-                ? "sold-out"
-                : ""
+              product.badge === "SOLD OUT" ? "sold-out" : ""
             }`}
           >
             {product.badge}
@@ -106,10 +132,7 @@ function ProductCard({ product, isBest }) {
         )}
 
         <div className="product-overlay">
-          <button
-            type="button"
-            onClick={handleCartClick}
-          >
+          <button type="button" onClick={handleCartClick}>
             <FaShoppingCart />
           </button>
 
@@ -119,9 +142,7 @@ function ProductCard({ product, isBest }) {
 
           <button
             type="button"
-            className={`hover-like-btn ${
-              isLiked ? "liked" : ""
-            }`}
+            className={`hover-like-btn ${isLiked ? "liked" : ""}`}
             onClick={handleLikeClick}
           >
             {isLiked ? <FaHeart /> : <FaRegHeart />}
@@ -129,10 +150,7 @@ function ProductCard({ product, isBest }) {
         </div>
       </div>
 
-      <Link
-        to={`/product/${product.id}`}
-        className="product-text-link"
-      >
+      <Link to={`/product/${product.id}`} className="product-text-link">
         <h3>{product.name}</h3>
         <p>{product.price}</p>
       </Link>
@@ -144,64 +162,157 @@ function ProductList({ currentCategory }) {
   const [searchText, setSearchText] = useState("");
   const [sortType, setSortType] = useState("default");
 
-const categoryImages = {
-  hiking: [
-    hikingBest1,hikingBest2,hikingBest3,hikingBest4,
-  ],
-
-  running: [
-    running1,running2,running3,running4,
-  ],
-
-  training: [
-    training1,training2,training3,training4,
-  ],
-
-  camping: [
-    camping1,camping2,camping3,camping4,
-  ],
-
-  climbing: [
-    climbing1,climbing2,climbing3,climbing4,
-  ],
-
-  whitelabel: [
-    white1,white2,white3,white4,
-  ],
-};
+  const categoryImages = {
+    hiking: [hikingBest1, hikingBest2, hikingBest3, hikingBest4],
+    running: [running1, running2, running3, running4],
+    training: [training1, training2, training3, training4],
+    camping: [camping1, camping2, camping3, camping4],
+    climbing: [climbing1, climbing2, climbing3, climbing4],
+    whitelabel: [white1, white2, white3, white4],
+  };
 
   const currentImages =
     categoryImages[currentCategory] || categoryImages.hiking;
 
   const bestProducts = [
-    { id: 1, rank: 1, name: "COMPACT EX JKT", price: "135,150 원", image: currentImages[0] },
-    { id: 2, rank: 2, name: "DAYCAMP JACKET", price: "199,000 원", image: currentImages[1] },
-    { id: 3, rank: 3, name: "BIG SHOT", price: "169,000 원", image: currentImages[2] },
-    { id: 4, rank: 4, name: "NOVELTY DAYCAMP JACKET", price: "229,000 원", image: currentImages[3] },
+    {
+      id: `${currentCategory}-best-1`,
+      rank: 1,
+      name: "COMPACT EX JKT",
+      price: "135,150 원",
+      image: currentImages[0],
+    },
+    {
+      id: `${currentCategory}-best-2`,
+      rank: 2,
+      name: "DAYCAMP JACKET",
+      price: "199,000 원",
+      image: currentImages[1],
+    },
+    {
+      id: `${currentCategory}-best-3`,
+      rank: 3,
+      name: "BIG SHOT",
+      price: "169,000 원",
+      image: currentImages[2],
+    },
+    {
+      id: `${currentCategory}-best-4`,
+      rank: 4,
+      name: "NOVELTY DAYCAMP JACKET",
+      price: "229,000 원",
+      image: currentImages[3],
+    },
   ];
 
-    const jackets =
-      currentCategory === "hiking"
-        ? [
-            { id: 1, name: "Black jacket", price: "186,200 원", image: hikingProduct1 },
-            { id: 2, name: "Brown jacket", price: "186,200 원", image: hikingProduct2, badge: "NEW" },
-            { id: 3, name: "Gray jacket", price: "186,200 원", image: hikingProduct3 },
-            { id: 4, name: "Bogum black jacket", price: "199,000 원", image: hikingProduct4, badge: "SOLD OUT" },
-            { id: 5, name: "Mint jacket", price: "186,200 원", image: hikingProduct5 },
-            { id: 6, name: "White jacket", price: "169,200 원", image: hikingProduct6, badge: "BEST" },
-            { id: 7, name: "Black jacket", price: "169,200 원", image: hikingProduct7 },
-            { id: 8, name: "Apricot jacket", price: "186,200 원", image: hikingProduct8 },
-          ]
-        : [
-            { id: 1, name: "Black jacket", price: "186,200 원", image: currentImages[0] },
-            { id: 2, name: "Brown jacket", price: "186,200 원", image: currentImages[1], badge: "NEW" },
-            { id: 3, name: "Gray jacket", price: "186,200 원", image: currentImages[2] },
-            { id: 4, name: "Bogum black jacket", price: "199,000 원", image: currentImages[3], badge: "SOLD OUT" },
-            { id: 5, name: "Mint jacket", price: "186,200 원", image: currentImages[0] },
-            { id: 6, name: "White jacket", price: "169,200 원", image: currentImages[1], badge: "BEST" },
-            { id: 7, name: "Black jacket", price: "169,200 원", image: currentImages[2] },
-            { id: 8, name: "Apricot jacket", price: "186,200 원", image: currentImages[3] },
-          ];
+  const jackets =
+    currentCategory === "hiking"
+      ? [
+          {
+            id: `${currentCategory}-jacket-1`,
+            name: "Black jacket",
+            price: "186,200 원",
+            image: hikingProduct1,
+          },
+          {
+            id: `${currentCategory}-jacket-2`,
+            name: "Brown jacket",
+            price: "186,200 원",
+            image: hikingProduct2,
+            badge: "NEW",
+          },
+          {
+            id: `${currentCategory}-jacket-3`,
+            name: "Gray jacket",
+            price: "186,200 원",
+            image: hikingProduct3,
+          },
+          {
+            id: `${currentCategory}-jacket-4`,
+            name: "Bogum black jacket",
+            price: "199,000 원",
+            image: hikingProduct4,
+            badge: "SOLD OUT",
+          },
+          {
+            id: `${currentCategory}-jacket-5`,
+            name: "Mint jacket",
+            price: "186,200 원",
+            image: hikingProduct5,
+          },
+          {
+            id: `${currentCategory}-jacket-6`,
+            name: "White jacket",
+            price: "169,200 원",
+            image: hikingProduct6,
+            badge: "BEST",
+          },
+          {
+            id: `${currentCategory}-jacket-7`,
+            name: "Black jacket",
+            price: "169,200 원",
+            image: hikingProduct7,
+          },
+          {
+            id: `${currentCategory}-jacket-8`,
+            name: "Apricot jacket",
+            price: "186,200 원",
+            image: hikingProduct8,
+          },
+        ]
+      : [
+          {
+            id: `${currentCategory}-jacket-1`,
+            name: "Black jacket",
+            price: "186,200 원",
+            image: currentImages[0],
+          },
+          {
+            id: `${currentCategory}-jacket-2`,
+            name: "Brown jacket",
+            price: "186,200 원",
+            image: currentImages[1],
+            badge: "NEW",
+          },
+          {
+            id: `${currentCategory}-jacket-3`,
+            name: "Gray jacket",
+            price: "186,200 원",
+            image: currentImages[2],
+          },
+          {
+            id: `${currentCategory}-jacket-4`,
+            name: "Bogum black jacket",
+            price: "199,000 원",
+            image: currentImages[3],
+            badge: "SOLD OUT",
+          },
+          {
+            id: `${currentCategory}-jacket-5`,
+            name: "Mint jacket",
+            price: "186,200 원",
+            image: currentImages[0],
+          },
+          {
+            id: `${currentCategory}-jacket-6`,
+            name: "White jacket",
+            price: "169,200 원",
+            image: currentImages[1],
+            badge: "BEST",
+          },
+          {
+            id: `${currentCategory}-jacket-7`,
+            name: "Black jacket",
+            price: "169,200 원",
+            image: currentImages[2],
+          },
+          {
+            id: `${currentCategory}-jacket-8`,
+            name: "Apricot jacket",
+            price: "186,200 원",
+            image: currentImages[3],
+          },
+        ];
 
   const filteredJackets = jackets
     .filter((product) =>
@@ -222,28 +333,22 @@ const categoryImages = {
     <section className="product-list-section">
       <div className="section-line" />
 
-<div className="product-inner">
+      <div className="product-inner">
+        <div className="best-title-row">
+          <div>
+            <h2>최신 베스트 셀렉션</h2>
 
-  <div className="best-title-row">
+            <p className="section-subtitle">
+              이번 주 가장 사랑받은 베스트 아이템
+            </p>
+          </div>
 
-    <div>
-      <h2>최신 베스트 셀렉션</h2>
+          <Link to="/products/best" className="best-more-btn">
+            베스트 셀렉션 보러가기 →
+          </Link>
+        </div>
 
-      <p className="section-subtitle">
-        이번 주 가장 사랑받은 베스트 아이템
-      </p>
-    </div>
-
-    <Link
-      to="/products/best"
-      className="best-more-btn"
-    >
-      베스트 셀렉션 보러가기 →
-    </Link>
-
-  </div>
-
-  <div className="product-grid best-grid">
+        <div className="product-grid best-grid">
           {bestProducts.map((product) => (
             <ProductCard
               key={product.id}
