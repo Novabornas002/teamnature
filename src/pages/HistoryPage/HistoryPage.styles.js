@@ -259,3 +259,51 @@ export const ScrollIndicator = styled(motion.div)`
     left: 20px;
   }
 `;
+
+export const ScrollTopButton = styled(motion.button)`
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-family: ${({ theme }) => theme.fonts.en};
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  z-index: 50;
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  transition: background 0.3s ease, border-color 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  &:hover .arrow {
+    transform: translateY(-3px);
+  }
+
+  .arrow {
+    font-size: 16px;
+    line-height: 1;
+    transition: transform 0.3s ease;
+  }
+
+  @media (max-width: 768px) {
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    font-size: 10px;
+  }
+`;

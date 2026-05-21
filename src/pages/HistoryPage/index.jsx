@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import Header from '../../components/common/Header';
 import Footer from '../../components/common/Footer';
 
@@ -31,6 +32,7 @@ import {
   Description,
   BackButton,
   ScrollIndicator,
+  ScrollTopButton,
 } from './HistoryPage.styles';
 
 const HISTORY_DATA = [
@@ -113,7 +115,9 @@ function HistoryPage() {
   const timelineRef = useRef(null);
   const itemRefs = useRef([]);
   const [indicatorTop, setIndicatorTop] = useState(0);
+  const [showTopButton, setShowTopButton] = useState(false);
 
+  // 빨간 점 위치 감지
   useEffect(() => {
     const handleScroll = () => {
       if (!timelineRef.current) return;
@@ -121,7 +125,6 @@ function HistoryPage() {
       const viewportCenter = window.innerHeight / 2;
       const timelineRect = timelineRef.current.getBoundingClientRect();
 
-      // 각 카드와 화면 중앙의 거리 계산
       let closestIndex = 0;
       let closestDistance = Infinity;
 
@@ -137,7 +140,6 @@ function HistoryPage() {
         }
       });
 
-      // 가장 가까운 카드 위치를 타임라인 기준 상대 위치로 변환
       const closestItem = itemRefs.current[closestIndex];
       if (closestItem) {
         const itemRect = closestItem.getBoundingClientRect();
@@ -147,7 +149,7 @@ function HistoryPage() {
       }
     };
 
-    handleScroll(); // 초기 위치 설정
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll);
 
@@ -156,6 +158,20 @@ function HistoryPage() {
       window.removeEventListener('resize', handleScroll);
     };
   }, []);
+
+  // TOP 버튼 표시 여부
+  useEffect(() => {
+    const handleScrollTop = () => {
+      setShowTopButton(window.scrollY > 400);
+    };
+
+    window.addEventListener('scroll', handleScrollTop, { passive: true });
+    return () => window.removeEventListener('scroll', handleScrollTop);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <PageWrapper>
@@ -173,7 +189,7 @@ function HistoryPage() {
           <p>1966년부터 이어진 노스페이스의 여정</p>
         </PageTitle>
 
-          <Timeline ref={timelineRef}>
+        <Timeline ref={timelineRef}>
           <ScrollIndicator
             animate={{ top: indicatorTop }}
             transition={{ type: 'spring', stiffness: 120, damping: 20 }}
@@ -237,6 +253,22 @@ function HistoryPage() {
           })}
         </Timeline>
       </Container>
+
+      <AnimatePresence>
+        {showTopButton && (
+          <ScrollTopButton
+            onClick={scrollToTop}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.3 }}
+            aria-label="맨 위로 이동"
+          >
+            <span className="arrow">↑</span>
+            <span>TOP</span>
+          </ScrollTopButton>
+        )}
+      </AnimatePresence>
 
       <Footer />
     </PageWrapper>

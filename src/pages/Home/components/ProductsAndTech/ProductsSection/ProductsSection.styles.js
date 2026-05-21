@@ -117,7 +117,7 @@ export const CardLabel = styled.span`
   left: 24px;
   z-index: 2;
   font-family: ${({ theme }) => theme.fonts.ko};
-  font-size: 22px;
+  font-size: 32px;
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   color: ${({ theme }) => theme.colors.white};
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);

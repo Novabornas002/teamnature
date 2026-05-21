@@ -206,7 +206,7 @@ export const CardContent = styled.div`
 `;
 
 export const CardLabel = styled.div`
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 500;
   letter-spacing: -0.01em;
   margin-bottom: 8px;
@@ -230,7 +230,7 @@ export const CardSuffix = styled.span`
 `;
 
 export const CardDesc = styled.div`
-  font-size: 11.5px;
+  font-size: 14px;
   line-height: 1.7;
   text-align: center;
   margin-top: auto;

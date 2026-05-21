@@ -23,7 +23,7 @@ import {
 const PRODUCTS_DATA = [
   { id: 1, label: '하이킹', image: productHiking, path: '/products/hiking' },
   { id: 2, label: '러닝', image: productRunning, path: '/products/running' },
-  { id: 3, label: '트레일 러닝', image: productTrail, path: '/products/trail' },
+  { id: 3, label: '트레일 러닝', image: productTrail, path: '/products/training' },
   { id: 4, label: '클라이밍', image: productClimbing, path: '/products/climbing' },
   { id: 5, label: '캠핑', image: productCamping, path: '/products/camping' },
   { id: 6, label: '화이트 레벨', image: productWhitelabel, path: '/products/whitelabel' },
