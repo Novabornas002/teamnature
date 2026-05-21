@@ -114,11 +114,12 @@ function BestSelection() {
   const [activeCategory, setActiveCategory] = useState("camping");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [likedItems, setLikedItems] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const currentImages = productImages[activeCategory];
   const currentNames = productNames[activeCategory];
 
-  const products = Array.from({ length: 16 }, (_, index) => {
+  const allProducts = Array.from({ length: 32 }, (_, index) => {
     const itemIndex = index % 4;
 
     return {
@@ -129,6 +130,11 @@ function BestSelection() {
       price: currentNames[itemIndex][1],
     };
   });
+
+const products = allProducts.slice(
+  (currentPage - 1) * 16,
+  currentPage * 16
+);
 
   const handleCartClick = (event) => {
     event.stopPropagation();
@@ -288,8 +294,19 @@ function BestSelection() {
           </div>
 
           <div className="best-pagination">
-            <button className="active">1</button>
-            <button>2</button>
+            <button
+              className={currentPage === 1 ? "active" : ""}
+              onClick={() => setCurrentPage(1)}
+            >
+              1
+            </button>
+
+            <button
+              className={currentPage === 2 ? "active" : ""}
+              onClick={() => setCurrentPage(2)}
+            >
+              2
+            </button>
           </div>
         </div>
       </section>
