@@ -4,6 +4,7 @@ export const ProductsWrapper = styled.div`
   position: relative;
   z-index: 1;
   padding: 120px 0 100px;
+  background: #111111;
 
   ${({ theme }) => theme.media.tablet} {
     padding: 80px 0 60px;
@@ -21,11 +22,7 @@ export const Container = styled.div`
 `;
 
 export const SectionHeader = styled.div`
-  margin-bottom: 60px;
-
-  ${({ theme }) => theme.media.tablet} {
-    margin-bottom: 32px;
-  }
+  margin-bottom: 48px;
 `;
 
 export const SectionTitle = styled.h2`
@@ -34,7 +31,7 @@ export const SectionTitle = styled.h2`
   font-weight: ${({ theme }) => theme.fontWeight.extrabold};
   letter-spacing: -0.02em;
   line-height: 1.1;
-  color: ${({ theme }) => theme.colors.textPrimary};
+  color: ${({ theme }) => theme.colors.white};
   margin-bottom: 12px;
 
   ${({ theme }) => theme.media.tablet} {
@@ -44,81 +41,90 @@ export const SectionTitle = styled.h2`
 
 export const SectionSubtitle = styled.p`
   font-family: ${({ theme }) => theme.fonts.ko};
-  font-size: ${({ theme }) => theme.fontSize.bodyLg};
-  color: ${({ theme }) => theme.colors.textSecondary};
+  font-size: ${({ theme }) => theme.fontSize.body};
+  color: rgba(255, 255, 255, 0.6);
 
   ${({ theme }) => theme.media.tablet} {
-    font-size: ${({ theme }) => theme.fontSize.body};
+    font-size: ${({ theme }) => theme.fontSize.bodySm};
   }
 `;
 
-export const BannerList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+export const CardGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
 
   ${({ theme }) => theme.media.tablet} {
-    gap: 16px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  ${({ theme }) => theme.media.mobile} {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
   }
 `;
 
-export const Banner = styled.button`
+export const Card = styled.button`
   position: relative;
-  width: 75%;
-  height: 220px;
-  border: 2px solid ${({ theme }) => theme.colors.white};
-  border-radius: 8px;
+  width: 100%;
+  aspect-ratio: 3 / 4;     /* 인스타 스토리 비율 */
+  border-radius: 20px;
   overflow: hidden;
   cursor: pointer;
-  background: none;
+  background: #222222;
+  border: none;
   padding: 0;
-  align-self: ${({ $align }) => ($align === 'right' ? 'flex-end' : 'flex-start')};
-  transition: transform ${({ theme }) => theme.transition.base};
+  transition: transform 0.3s ease;
 
   &:hover {
-    transform: scale(1.01);
-  }
-
-  ${({ theme }) => theme.media.desktop} {
-    width: 85%;
-    height: 180px;
+    transform: scale(1.02);
   }
 
   ${({ theme }) => theme.media.tablet} {
-    width: 100%;
-    height: 140px;
-    align-self: stretch;
+    border-radius: 14px;
   }
 `;
 
-export const BannerImage = styled.div`
+export const CardImage = styled.div`
   position: absolute;
   inset: 0;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  transition: transform 0.6s ease;
+  transition: transform 0.5s ease;
 
-  ${Banner}:hover & {
+  /* 하단 그라데이션 — 텍스트 가독성 */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      transparent 40%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+  }
+
+  ${Card}:hover & {
     transform: scale(1.05);
   }
 `;
 
-export const BannerLabel = styled.span`
+export const CardLabel = styled.span`
   position: absolute;
   bottom: 24px;
-  right: 32px;
+  left: 24px;
   z-index: 2;
-  font-family: ${({ theme }) => theme.fonts.en};
-  font-size: 32px;
+  font-family: ${({ theme }) => theme.fonts.ko};
+  font-size: 22px;
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   color: ${({ theme }) => theme.colors.white};
-  letter-spacing: -0.01em;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 
   ${({ theme }) => theme.media.tablet} {
-    font-size: 22px;
+    font-size: 16px;
     bottom: 16px;
-    right: 20px;
+    left: 16px;
   }
 `;
