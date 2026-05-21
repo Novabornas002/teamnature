@@ -482,7 +482,11 @@ const products = allProducts.slice(
 
               <div className="best-cart-info">
                 <p>{item.name}</p>
-                <span>{item.price}</span>
+                <span>
+                  {(
+                    Number(item.price.replace(/[^\d]/g, "")) * item.quantity
+                  ).toLocaleString()} 원
+                </span>
 
                 <div className="best-cart-quantity">
                   <button onClick={() => updateQuantity(item.id, "decrease")}>
