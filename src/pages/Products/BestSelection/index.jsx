@@ -36,10 +36,10 @@ import training3 from "../../../assets/images/best/training/training-best-3.jpg"
 import training4 from "../../../assets/images/best/training/training-best-4.jpg";
 
 /* camping */
-import camping1 from "../../../assets/images/best/camping/Camping-best-1.jpg";
-import camping2 from "../../../assets/images/best/camping/Camping-best-2.jpg";
-import camping3 from "../../../assets/images/best/camping/Camping-best-3.jpg";
-import camping4 from "../../../assets/images/best/camping/Camping-best-4.jpg";
+import camping1 from "../../../assets/images/best/camping/camping-best-1.jpg";
+import camping2 from "../../../assets/images/best/camping/camping-best-2.jpg";
+import camping3 from "../../../assets/images/best/camping/camping-best-3.jpg";
+import camping4 from "../../../assets/images/best/camping/camping-best-4.jpg";
 
 /* climbing */
 import climbing1 from "../../../assets/images/best/climbing/climbing-best-1.jpg";
