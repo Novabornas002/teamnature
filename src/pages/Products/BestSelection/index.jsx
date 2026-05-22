@@ -8,7 +8,9 @@ import {
   FaRegHeart,
   FaHeart,
   FaSearchPlus,
+  FaArrowUp,
 } from "react-icons/fa";
+
 
 import Footer from "../../../components/common/Footer";
 import "./BestSelection.styles.css";
@@ -114,7 +116,10 @@ function BestSelection() {
   const [activeCategory, setActiveCategory] = useState("camping");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [likedItems, setLikedItems] = useState([]);
+
   const [currentPage, setCurrentPage] = useState(1);
+  
+  const [showTopButton, setShowTopButton] = useState(false);
 
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -144,6 +149,25 @@ function BestSelection() {
       window.removeEventListener("storage", updateCart);
     };
   }, []);
+
+    useEffect(() => {
+    const handleScroll = () => {
+      setShowTopButton(window.scrollY > 500);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   const currentImages = productImages[activeCategory];
   const currentNames = productNames[activeCategory];
@@ -541,6 +565,15 @@ const products = allProducts.slice(
           </button>
 
         </div>
+
+        {showTopButton && (
+          <button
+            className="best-top-button"
+            onClick={scrollToTop}
+          >
+            <FaArrowUp />
+          </button>
+        )}
 
     </main>
   );

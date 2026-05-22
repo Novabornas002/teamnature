@@ -749,3 +749,39 @@
   box-shadow: 0 8px 22px rgba(11, 27, 58, 0.18);
   transform: translateY(-2px);
 }
+
+.best-top-button {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  z-index: 150;
+
+  width: 52px;
+  height: 52px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #000000;
+  color: #ffffff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 18px;
+  cursor: pointer;
+
+  box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.best-top-button:hover {
+  background: #d6001c;
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(214,0,28,0.25);
+}
